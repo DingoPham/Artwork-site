@@ -10,6 +10,9 @@
 .p-6{
     padding: 15em;
 }
+.p-20{
+    padding: 20px;
+}
 .m-1{
     margin: 30px 200px 0 0;
 }
@@ -29,10 +32,16 @@
     margin-bottom: 20em;
 }
 .m-t{
-    margin-top: 58px;
+    margin-top: 60px;
 }
 .m-t-5{
     margin-top: 5px;
+}
+.m-l{
+    margin-left: 15px;
+}
+.m-l-0{
+    margin-left: 0;
 }
 .tx-c{
     color: #ffffff;
@@ -76,6 +85,9 @@
 }
 .flex-reverse{
     flex-direction: row-reverse;
+}
+.flex-start{
+    justify-content: flex-start;
 }
 .flex-end{
     justify-content: flex-end;
