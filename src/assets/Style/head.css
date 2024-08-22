@@ -1,0 +1,19 @@
+.navbar{
+    background-color: #363636;
+}
+.po-fixed{
+    position: fixed;
+}
+.w-100p{
+    width: 100%;
+}
+.h-60px{
+    height: 60px;
+}
+.tx-center{
+    text-align: center;
+}
+.a-c{
+    color: #fff;
+    text-decoration: none;
+}
