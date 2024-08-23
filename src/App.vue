@@ -18,3 +18,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 }
 </style>
+
+<style src="@/assets/Style/styleMain.css">
+</style>
+<style src="@/assets/Style/head.css">
+</style>
+<style src="@/assets/Style/body.css">
+</style>
+<style src="@/assets/Style/foot.css">
+</style>

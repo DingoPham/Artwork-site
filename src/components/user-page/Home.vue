@@ -1,33 +1,29 @@
 <template>
-  <main>
-    <!-- <h1>{{ msg }}</h1> -->
-    <Header />
-    <Content />
-    <Footer />
-  </main>
+  <div>
+    <Sidebar :isActive="isSidebarActive" />
+    <MainContent :isActive="isSidebarActive" :currentComponent="currentComponent" @toggle-sidebar="toggleSidebar" />
+  </div>
 </template>
 
 <script>
-import Content from './user-content-page/Content.vue';
-import Footer from './user-content-page/Footer.vue';
-import Header from './user-content-page/Header.vue';
+import MainContent from './user-sidebar/MainContent.vue';
+import Sidebar from './user-sidebar/Sidebar.vue';
 
 export default {
-  name: 'Home',
-  components:{Header, Content, Footer},
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+  components: {
+    Sidebar,
+    MainContent
   },
+  data() {
+    return {
+      isSidebarActive: false,
+      currentComponent: 'home'
+    };  
+  },
+  methods: {
+    toggleSidebar() {
+      this.isSidebarActive = !this.isSidebarActive;
+    }
+  }
 }
 </script>
-
-<style src="@/assets/Style/styleMain.css">
-</style>
-<style src="@/assets/Style/head.css">
-</style>
-<style src="@/assets/Style/body.css">
-</style>
-<style src="@/assets/Style/foot.css">
-</style>

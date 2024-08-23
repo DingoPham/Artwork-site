@@ -9,29 +9,20 @@
 .sidebar.active {
     transform: translateX(0);
 }
-.sidebar div p{
-    color: #fff;
-    margin: 0;
-}
-.sidebar div a{
+.sidebar a {
+    padding: 10px 15px;
     text-decoration: none;
-    color: #cecece;
-    transition: color 0.3s ease ;
+    color: white;
+    display: block;
 }
-.sidebar div a:hover{
-    color: #fff;
+.sidebar a:hover {
+    background-color: #575757;  
 }
 .po-fixed{
     position: fixed;
     left: 0;
     top: 0;
     z-index: 1000;
-}
-.po-rel{
-    position: absolute;
-    left: 0;
-    top: 0;
-    padding: 17px;
 }
 .h-100p{
     height: 100%;
@@ -45,17 +36,29 @@
 .h-60px{
     height: 60px;
 }
-.tx-center{
-    text-align: center;
-}
 .a-c{
     color: #fff;
     text-decoration: none;
 }
-.content {
+.m-c {
     margin-left: 0;
     transition: margin-left 0.3s ease;
 }
-.content.shift{
+.m-c.shift{
     margin-left: 300px;
+}
+.m-c header button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background-color: #363636;
+    height: 28px;
+    margin: 18px 0 14px 20px;
+    padding: 0;
+}
+.h-16{
+    height: 16px;
+}
+.m-22{
+    margin: 22px;
 }
