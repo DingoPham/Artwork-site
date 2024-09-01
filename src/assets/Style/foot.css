@@ -1,0 +1,7 @@
+.footer{
+    background-color: #363636;
+    transition: margin-left 0.3s ease;
+}
+.h-200{
+    height: 200px;
+}
