@@ -18,7 +18,7 @@ export default {
     return {
       isSidebarActive: false,
       currentComponent: 'home'
-    };  
+    };
   },
   methods: {
     toggleSidebar() {

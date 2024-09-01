@@ -4,10 +4,6 @@
         <div v-for="image in images" :key="image.id">
           <img :src="image.imgUrl" alt=""/>
         </div>
-        <!-- <img src="https://res.cloudinary.com/dtqyzzv0h/image/upload/v1718731012/LuverSummer_lu2zbu.jpg" alt=""/>
-        <img src="https://res.cloudinary.com/dtqyzzv0h/image/upload/v1718731012/LuverSummer_lu2zbu.jpg" alt=""/>
-        <img src="https://res.cloudinary.com/dtqyzzv0h/image/upload/v1718731012/LuverSummer_lu2zbu.jpg" alt=""/>
-        <img src="https://res.cloudinary.com/dtqyzzv0h/image/upload/v1718731012/LuverSummer_lu2zbu.jpg" alt=""/> -->
       </div>
       <NavigationFunction />
     </div>
