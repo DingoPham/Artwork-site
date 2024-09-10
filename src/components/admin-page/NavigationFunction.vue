@@ -8,7 +8,7 @@
 
 <script>
     export default{
-        components:{Insert},
+        components:{},
         methods:{
             addImage: function(){},
             updateImage: function(){},

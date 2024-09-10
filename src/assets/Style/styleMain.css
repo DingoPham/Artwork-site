@@ -111,6 +111,9 @@
 .items-center{
     align-items: center;
 }
+.items-end{
+    align-items: end;
+}
 .over-hidden{
     overflow: hidden;
 }
@@ -146,6 +149,12 @@
 }
 .h-30{
     height: 30px;
+}
+.h-500{
+    height: 500px;
+}
+.w-800{
+    width: 800px;
 }
 .tx-w{
     color: #ffffff;

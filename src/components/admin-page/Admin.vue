@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import NavigationFunction from './admin-function/NavigationFunction.vue';
+import NavigationFunction from './NavigationFunction.vue';
 
     export default{
         name: 'Admin',
