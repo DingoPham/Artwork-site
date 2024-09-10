@@ -6,11 +6,9 @@
                 <h1>{{ editMode ? 'Update image' : 'Insert image' }}</h1>
 
                 <form @submit.prevent="saveImage" class="flex flex-column gap">
-                    <label for="img-type">Select category:</label>
-                    <select v-model="imgType" id="img-type">
-                        <option value="sfw_art">SFW Art</option>
-                        <option value="nsfw_art">NSFW Art</option>
-                    </select>
+                    <label for="img-type" class="f-20 bold">- Safe For Work Art -</label>
+                    <input v-model="imgType" id="img-type" disabled hidden></input>
+                    
                     <label for="img-url">URL's image: </label>
                     <input v-model="imgUrl" id="img-url" type="text" placeholder="Type image's URL here">
 
@@ -92,7 +90,7 @@
                 const type = this.imgType; // selected type
 
                 if (this.editMode){
-                    fetch(`https://localhost:7064/ArtworkCombine/${this.images[this.editIndex].id}`,{
+                    fetch(`https://localhost:7064/ArtworkCombine/put/${this.images[this.editIndex].id}`,{
                         method: 'PUT',
                         headers:{
                             'Content-Type': 'application/json'
@@ -101,7 +99,7 @@
                     })
                     .then(response => response.json())
                     .then(() => {
-                        this.images[this.editIndex] = imgData;
+                        this.images[this.editIndex] = {imgData};
                         this.closePopup();
                     })
                     .catch(error => {
@@ -118,7 +116,10 @@
                     })
                     .then(response => response.json())
                     .then(newImage => {
-                        this.images.push(newImage);
+                        this.images.push({
+                            id: newImage.id,
+                            ...imgData
+                        });
                         this.closePopup();
                     })
                     .catch(error =>{
