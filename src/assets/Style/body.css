@@ -7,3 +7,76 @@
 .border-radius-5{
     border-radius: 5px;
 }
+.button-f{
+    cursor: pointer;
+    height: 30px;
+    width: 60px;
+}
+.m-t-20 button{
+    cursor: pointer;
+    height: 30px;
+    width: 60px;
+}
+.bg-w{
+    background-color: #ffffff;
+    width: 400px;
+    height: 550px;
+    border-radius: 4px;
+    box-shadow: 6px 10px 10px #000;
+}
+.authen-bg-main{
+    font-weight: 500;
+    font-size: 20px;
+    height:100%;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    background-color: #272727;
+}
+.authen-box form label a{
+    color: #006eff;
+    text-decoration: none;
+}
+.authen-box form label a:hover{
+    color: #004db1;
+    transition: color 0.3s ease;
+    text-decoration: underline;
+}
+.authen-box h2{
+    margin: 0;
+    font-size: 30px;
+}
+.authen-box form input{
+    width: 308px;
+    height: 30px;
+    outline: none;
+}
+.authen-box form button{
+    width: 70px;
+    height: 30px;
+    cursor: pointer;
+    outline: none;
+    background-color: #464646;
+    color: #fff;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out 0ms;
+}
+.authen-box form button:hover{
+    background-color: #272727;
+    box-shadow: 0px 0px 20px -18px;
+}
+.authen-box form button:active{
+    transform: scale(0.95);
+}
+.note{
+    color: #a0a0a0;
+    font-style: italic;
+    font-weight: 200;
+    text-align: center;
+}   
+.authen-box form i{
+    position: absolute;
+    cursor: pointer;
+    font-weight: 100;
+    margin-right: 10px;
+}

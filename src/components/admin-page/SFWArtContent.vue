@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button @click="showPopup = true">Insert</button>
+        <button v-if="userRole === 'Admin'" @click="showPopup = true" class="button-f">Insert</button>
         <div v-if="showPopup" class="po-fixed po-fixed-mod bg-c-popup flex justify-center items-center">
             <div class="bg-c-white p-1 border-radius-5 h-500 w-800">
                 <h1>{{ editMode ? 'Update image' : 'Insert image' }}</h1>
@@ -26,43 +26,59 @@
             </div>
         </div>
 
-        <div v-for="(image, index) in images" :key="image.id" class="m-t-5"> 
+        <div v-for="(image, index) in images" :key="image.id" class="m-t-20 flex flex-column gap-5 flex-baseline"> 
+            <button v-if="userRole === 'Admin'" @click="updateImage(index)">Update</button>
+            <button v-if="userRole === 'Admin'" @click="deleteImage(image.id)">Delete</button>
             <img :src="image.imgUrl" alt=""/>
             <p>{{ image.iName }}</p>
             <p>{{ image.describe }}</p>
-            <button @click="updateImage(index)">Update</button>
-            <button @click="deleteImage(image.id)">Delete</button>
         </div>
     </div>
 </template>
 
 <script>
     export default{
-        components:{
-
-        },
         data(){
             return{
                 showPopup: false,
                 editMode: false,
-                imgType: 'sfw_art', //Default type
+                imgType: 'sfw_art', // type
                 imgUrl: '',
                 imgName: '',
                 imgDescribe: '',
                 editIndex: null,
-                images: []
+                images: [],
+                userRole: '' // track role
             };
         },
         created(){
             this.fetchImages();
+            this.checkUserRole();
         },
         methods:{
+            checkUserRole(){
+                const token = localStorage.getItem('token');
+                if(!token){
+                    console.error('Token not found, welcome guest.');
+                    this.userRole = 'Guest'; // default role for unknow user
+                    return;
+                }
+                try{
+                    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+                    this.userRole = decodedToken.role;    
+                }
+                catch(error){
+                    console.error('Error decoding token: ', error);
+                    this.userRole = 'Guest'; // fix the error of not found user
+                }
+            },
+
             closePopup(){
                 this.showPopup = false;
                 this.imgUrl = '';
                 this.imgName = '';
                 this.imgDescribe = '';
-                this.imgType = 'sfw_art'; // reset to default
+                this.imgType = 'sfw_art'; // close popup with this type
                 this.editMode = false;
                 this.editIndex = null;
             },

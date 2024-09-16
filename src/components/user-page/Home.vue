@@ -10,6 +10,7 @@ import MainContent from './user-sidebar/MainContent.vue';
 import Sidebar from './user-sidebar/Sidebar.vue';
 
 export default {
+  name: 'home',
   components: {
     Sidebar,
     MainContent

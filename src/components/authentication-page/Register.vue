@@ -1,0 +1,88 @@
+<template>
+    <div class="authen-bg-main flex justify-center items-center">
+        <div class="bg-w">
+            <h2 class="tx-center"> Register </h2>
+            <div class="authen-box flex flex-column items-center gap">
+                <form @submit.prevent="register" class="flex flex-column gap-10">
+                    <label for="email">Enter your Email</label>
+                    <input v-model="email" placeholder="Email"/>
+
+                    <label for="username"> Enter your Username </label>
+                    <input v-model="username" placeholder="Username" maxlength="20"/>
+
+                    <label for="password"> Enter your Password </label>
+                    <div class="flex items-center justify-end">
+                        <input :type="showPassword ? 'text' : 'password'" 
+                            v-model="password" 
+                            placeholder="Password"
+                            maxlength="20"
+                            />
+                        <i @click="visiblePass" class="flex "
+                            :class="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'">
+                        </i>
+                    </div>
+
+                    <label for="age">Enter your Age</label>
+                    <input v-model="age" placeholder="Age" type="number" :min="0" :max="100"/>
+                    
+                    <div class="justify-center flex">
+                        <button type="submit" >Register</button>
+                    </div>
+                    
+                    <label for="/">Already have an account?
+                        <router-link to="/login">
+                            Sign in
+                        </router-link>
+                    </label>
+
+                    <input v-model="role" id="role" hidden disabled/> <!-- Hidden role function.... -->
+                </form> 
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default{
+        name: 'register',
+        data() {
+            return {
+                email: '',
+                username: '',
+                password: '',
+                age: '',
+                showPassword: false,
+            };
+        },
+        methods:{
+            visiblePass(){
+                this.showPassword = !this.showPassword;
+            },
+            async register(){
+                try{
+                    const response = await fetch('https://localhost:7064/ArtworkCombine/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            Email: this.email,
+                            Username: this.username,
+                            Password: this.password,
+                            Age: this.age
+                        })
+                    });
+
+                    const result = await response.json();
+                    alert(result.message);
+                    if (result.message === 'Registration succsessful'){
+                        this.$route.push('/login');
+                    }
+                }
+                catch(error){
+                    alert('Registration failed');
+                }
+            }
+        }
+    }
+</script>

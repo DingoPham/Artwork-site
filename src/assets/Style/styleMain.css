@@ -47,6 +47,9 @@
 .m-t-5{
     margin-top: 5px;
 }
+.m-t-20{
+    margin-top: 20px;
+}
 .m-l{
     margin-left: 15px;
 }
@@ -105,11 +108,17 @@
 .flex-end{
     justify-content: flex-end;
 }
+.flex-baseline{
+    align-items: baseline;
+}
 .space-between{
     justify-content: space-between;
 }
 .justify-center{
     justify-content: center;
+}
+.justify-end{
+    justify-content: flex-end;
 }
 .items-center{
     align-items: center;
@@ -122,6 +131,9 @@
 }
 .flex-wrap{
     flex-wrap: wrap;
+}
+.gap-5{
+    gap: 5px;
 }
 .gap-10{
     gap: 10px;
@@ -166,17 +178,6 @@
     transition: 0.2s;
 }
 body{
+    outline: none;
     margin: 0;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-body.light{
-    background-color: #fff;
-    color: #000;
-}
-body.dark{
-    background-color: #282828;
-    color: #fff;
-}
-.c-black{
-    color: #000;
 }
