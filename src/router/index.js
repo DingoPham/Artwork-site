@@ -46,7 +46,7 @@ export default new Router({
       component: Login
     },
     {
-      path: '/forget',
+      path: '/forget-password',
       name: 'forget-password',
       component: Forget
     }

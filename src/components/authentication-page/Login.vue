@@ -4,12 +4,12 @@
             <h2 class="tx-center"> Login </h2>
             <div class="authen-box flex flex-column items-center gap">
                 <form @submit.prevent="login" class="flex flex-column gap-10">
-                    <label for="username"> Enter your Username </label>
+                    <label for="username"> Username </label>
                     <input v-model="username" placeholder="Username" maxlength="20"/>
-                    <label for="password"> Enter your Password </label>
+                    <label for="password"> Password </label>
                     <div class="flex items-center justify-end">
                         <input :type="showPassword ? 'text' : 'password'" 
-                            v-model="password" 
+                            v-model="password"
                             placeholder="Password"
                             maxlength="20"
                             />
@@ -25,7 +25,7 @@
                         <router-link to="/register">Sign up</router-link>
                     </label>
                     <label for="/">
-                        <router-link to="/forget">Forgot account?</router-link>
+                        <router-link to="/forget-password">Forgot account?</router-link>
                     </label>
                 </form> 
             </div>
@@ -59,14 +59,21 @@
                             Password: this.password
                         })
                     });
+                    if (!response.ok){
+                        throw new Error("Network response wasn't ok");
+                    }
 
                     const result = await response.json();
+                    console.log("API response: ", result);
                     alert(result.message);
+
                     if (result.message === 'Login successful!'){
-                        this.$route.push('/');
+                        localStorage.setItem('token', result.token);
+                        this.$router.push({path: "/"});
                     }
                 }
                 catch(error){
+                    console.log('Login failed: ', error)
                     alert('Login failed');
                 }
             }

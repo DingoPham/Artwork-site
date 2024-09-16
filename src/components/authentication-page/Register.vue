@@ -4,13 +4,13 @@
             <h2 class="tx-center"> Register </h2>
             <div class="authen-box flex flex-column items-center gap">
                 <form @submit.prevent="register" class="flex flex-column gap-10">
-                    <label for="email">Enter your Email</label>
+                    <label for="email">Email</label>
                     <input v-model="email" placeholder="Email"/>
 
-                    <label for="username"> Enter your Username </label>
+                    <label for="username"> Username </label>
                     <input v-model="username" placeholder="Username" maxlength="20"/>
 
-                    <label for="password"> Enter your Password </label>
+                    <label for="password"> Password </label>
                     <div class="flex items-center justify-end">
                         <input :type="showPassword ? 'text' : 'password'" 
                             v-model="password" 
@@ -22,7 +22,7 @@
                         </i>
                     </div>
 
-                    <label for="age">Enter your Age</label>
+                    <label for="age">Age</label>
                     <input v-model="age" placeholder="Age" type="number" :min="0" :max="100"/>
                     
                     <div class="justify-center flex">
@@ -51,6 +51,7 @@
                 username: '',
                 password: '',
                 age: '',
+                role: 'user',
                 showPassword: false,
             };
         },
@@ -69,17 +70,27 @@
                             Email: this.email,
                             Username: this.username,
                             Password: this.password,
-                            Age: this.age
+                            Age: this.age,
+                            Role: this.role
                         })
                     });
 
                     const result = await response.json();
+                    console.log('API response: ', result);
+
                     alert(result.message);
-                    if (result.message === 'Registration succsessful'){
-                        this.$route.push('/login');
+                    if (result.message === 'Registration successful'){
+                        console.log('Redirecting to login...');
+                        setTimeout(() => {
+                            this.$router.push({path: "/login"});
+                        }, 800);
+                    }
+                    else {
+                        console.error('Registration failed or message is not as expected:', result.message);
                     }
                 }
                 catch(error){
+                    console.error('Error during registration:', error);
                     alert('Registration failed');
                 }
             }

@@ -4,7 +4,7 @@
             <h2 class="tx-center"> Forgot account </h2>
             <div class="authen-box flex flex-column items-center gap">
                 <form @submit.prevent="login" class="flex flex-column gap-10">
-                    <label for="email"> Enter your Email </label>
+                    <label for="email"> Email </label>
                     <input v-model="email" placeholder="Email" />
                     
                     <div class="justify-center flex">
