@@ -9,7 +9,6 @@
         <a href="https://www.youtube.com/channel/UCtH0_zKVeXOKO2hiqLoHSrg">Follow my Youtube</a>
         <a href="https://buymeacoffee.com/dingopham763/membership">Buy me a coffee</a>
         <p class="m-b tx-w f-30-n">Other Things</p>
-        <router-link to="/login">Sign In</router-link>
         <a href="https://dingopham.github.io">My Blog</a>
       </div>
     </div>

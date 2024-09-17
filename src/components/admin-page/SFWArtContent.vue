@@ -26,19 +26,28 @@
             </div>
         </div>
 
-        <div v-for="(image, index) in images" :key="image.id" class="m-t-20 flex flex-column gap-5 flex-baseline"> 
+        <div v-for="(image, index) in paginatedImages" :key="image.id" class="m-t-20 flex flex-column gap-5 flex-baseline"> 
             <button v-if="userRole === 'admin'" @click="updateImage(index)">Update</button>
             <button v-if="userRole === 'admin'" @click="deleteImage(image.id)">Delete</button>
             <img :src="image.imgUrl" alt=""/>
             <p>{{ image.iName }}</p>
             <p>{{ image.describe }}</p>
         </div>
+        
+        <PageChanger
+            v-if="images.length > 0"
+            :totalPages = "totalPages"
+            :curruntPage = "curruntPage"
+            @page-change="changePage"
+        />
     </div>
 </template>
 
 <script>
+    import PageChanger from "../admin-page/other-admin-fuction/PageChanger.vue"
+
     export default{
-        components:{},
+        components:{PageChanger},
         data(){
             return{
                 showPopup: false,
@@ -49,27 +58,41 @@
                 imgDescribe: '',
                 editIndex: null,
                 images: [],
-                userRole: '' // track role
+                userRole: '', // track role
+                curruntPage: 1,
+                itemsPerPage: 6,
             };
+        },
+        computed:{
+            totalPages(){
+                return Math.ceil(this.images.length / this.itemsPerPage);
+            },
+            paginatedImages(){
+                const start = (this.curruntPage - 1) * this.itemsPerPage;
+                return this.images.slice(start, start + this.itemsPerPage);
+            }
         },
         created(){
             this.fetchImages();
             this.checkUserRole();
         },
         methods:{
+            changePage(page){
+                this.curruntPage = page;    
+            },
             checkUserRole(){
                 const token = localStorage.getItem('token');
                 console.log("Token: ", token);
 
                 if(!token){
                     console.error('Token not found, welcome guest.');
-                    this.userRole = 'Guest'; // default role for unknow user
+                    this.userRole = 'guest'; // default role for unknow user
                     return;
                 }
                 const tokenParts = token.split('.');
                 if(tokenParts.length !== 3){
                     console.error('Token format is incorrect');
-                    this.userRole = 'Guest';
+                    this.userRole = 'guest';
                     return;
                 }
                 try{
@@ -79,10 +102,9 @@
                 }
                 catch(error){
                     console.error('Error decoding token: ', error);
-                    this.userRole = 'Guest'; // fix the error of not found user
+                    this.userRole = 'guest'; // fix the error of not found user
                 }
             },
-
             closePopup(){
                 this.showPopup = false;
                 this.imgUrl = '';
@@ -191,7 +213,7 @@
                 .catch(error => {
                     console.error('Error while deleting image: ', error);
                 });
-            }
+            },
         }
     }
 </script>

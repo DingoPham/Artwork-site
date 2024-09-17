@@ -106,3 +106,24 @@ div hr{
     height: 1px;
     background-color: #27272782;
 }
+.pc input{
+    width: 30px;
+    height: 25px;
+    outline: none;
+    text-align: center;
+}
+.pc button{
+    width: 35px;
+    height: 30px;
+    background-color: #272727;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.pc button:active{
+    transform: scale(0.95);
+}
+.pc button span{
+    font-size: 20px;
+    display: flex;
+}
