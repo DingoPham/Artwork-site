@@ -123,6 +123,11 @@ div hr{
 .pc button:active{
     transform: scale(0.95);
 }
+.pc button:disabled{
+    background-color: #727272;
+    color: #fff;
+    cursor: not-allowed;
+}
 .pc button span{
     font-size: 20px;
     display: flex;
