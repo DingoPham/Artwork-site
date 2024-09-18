@@ -2,7 +2,7 @@
     background-color: #363636;
 }
 .bg-c-popup{
-    background-color: #575757;
+    background-color: #575757c0;
 }
 .bg-c-white{
     background-color: white;
@@ -71,4 +71,20 @@
 }
 .m-22{
     margin: 22px;
+}
+.po-fixed .div div{
+    position: fixed;
+    top: 2%;
+    right: 2%;
+    background-color: #2b2b2b4b;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 30px;
+    width: 25px;
+    text-align: center;
+}
+.bg-c-popup .bg-c-white{
+    width: 300px;
+    height: 300px;
 }

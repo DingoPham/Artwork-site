@@ -19,17 +19,28 @@
                     <input v-model="imgDescribe" id="img-des" type="text" placeholder="Type image's describe here">
 
                     <div class="flex flex-column gap-10 items-end  ">
-                        <button type="submit" class="w-60 h-30">{{ editMode ? 'Update' : 'Insert' }}</button>
-                        <button type="button" @click="closePopup" class="w-60 h-30">Cancle</button>
+                        <button type="submit" class="button-f">{{ editMode ? 'Update' : 'Insert' }}</button>
+                        <button type="button" class="button-f" @click="closePopup">Cancle</button>
                     </div>
                 </form>
             </div>
         </div>
 
+        <div v-if="showImagePopup" class="po-fixed po-fixed-mod bg-c-popup flex justify-center items-center">
+            <div class="div">
+                <img :src="curruntImage.imgUrl" alt="">
+                <div @click="showImagePopup = false">
+                    <i style="font-size:24px" class="fa">&#xf00d;</i>
+                </div>
+            </div>
+        </div>
+
         <div v-for="(image, index) in paginatedImages" :key="image.id" class="m-t-20 flex flex-column gap-5 flex-baseline"> 
-            <button v-if="userRole === 'admin'" @click="updateImage(index)">Update</button>
-            <button v-if="userRole === 'admin'" @click="deleteImage(image.id)">Delete</button>
-            <img :src="image.imgUrl" alt=""/>
+            <div class="flex gap-10">
+                <button v-if="userRole === 'admin'" @click="updateImage(index)" class="button-f">Update</button>
+                <button v-if="userRole === 'admin'" @click="deleteImage(image.id)" class="button-f">Delete</button>
+            </div>
+            <img :src="image.imgUrl" alt="" @click="showFullImage(image)"/>
             <p>{{ image.iName }}</p>
             <p>{{ image.describe }}</p>
         </div>
@@ -61,6 +72,8 @@
                 userRole: '', // track role
                 curruntPage: 1,
                 itemsPerPage: 6,
+                showImagePopup: false,
+                curruntImage: null,
             };
         },
         computed:{
@@ -77,6 +90,10 @@
             this.checkUserRole();
         },
         methods:{
+            showFullImage(image){
+                this.curruntImage = image;
+                this.showImagePopup = true;
+            },
             changePage(page){
                 this.curruntPage = page;    
             },
@@ -84,7 +101,6 @@
                 const role = localStorage.getItem('role');
                 if(role === 'admin'){
                     this.userRole = 'admin';
-                    console.log("Role: ", this.userRole);
                     return;
                 }
 

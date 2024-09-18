@@ -1,5 +1,6 @@
 <template>
     <div class="authen-bg-main flex justify-center items-center">
+        <PopupNotification v-if="showPopupNotify" :message = "popupMessage" @hide="onPopupHide"/>
         <div class="bg-w">
             <h2 class="tx-center"> Login </h2>
             <div class="authen-box flex flex-column items-center gap">
@@ -35,14 +36,19 @@
 </template>
 
 <script>
+import PopupNotification from '../admin-page/other-admin-fuction/PopupNotification.vue';
+
     export default{
         name: 'login',
+        components:{PopupNotification},
         data(){
             return{
                 username: '',
                 password: '',
                 role: '',
                 showPassword: false,
+                showPopupNotify: false,
+                popupMessage: '',
             };
         },
         methods:{
@@ -68,19 +74,26 @@
 
                     const result = await response.json();
                     console.log("API response: ", result);
-                    alert(result.message);
 
                     if (result.message === 'Login successful!'){
                         localStorage.setItem('token', result.token);
                         localStorage.setItem('username', result.username);
                         localStorage.setItem('role', result.role)
-                        this.$router.push({path: "/"});
+                        
                     }
+
+                    this.popupMessage = 'Login Successful!';
+                    this.showPopupNotify = true;
                 }
                 catch(error){
                     console.log('Login failed: ', error)
-                    alert('Login failed');
+
+                    this.showMessage = "Login Failed...";
+                    this.showPopupNotify = true;
                 }
+            },
+            onPopupHide(){
+                this.$router.push({path: "/"});
             }
         }
     };
