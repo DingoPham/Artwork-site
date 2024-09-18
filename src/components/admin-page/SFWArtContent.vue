@@ -81,9 +81,14 @@
                 this.curruntPage = page;    
             },
             checkUserRole(){
-                const token = localStorage.getItem('token');
-                console.log("Token: ", token);
+                const role = localStorage.getItem('role');
+                if(role === 'admin'){
+                    this.userRole = 'admin';
+                    console.log("Role: ", this.userRole);
+                    return;
+                }
 
+                const token = localStorage.getItem('token');
                 if(!token){
                     console.error('Token not found, welcome guest.');
                     this.userRole = 'guest'; // default role for unknow user
@@ -98,7 +103,6 @@
                 try{
                     const decodedToken = JSON.parse(atob(token.split('.')[1]));
                     this.userRole = decodedToken.role;    
-                    console.log("Decode Token:", decodedToken);
                 }
                 catch(error){
                     console.error('Error decoding token: ', error);

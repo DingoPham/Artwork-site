@@ -46,7 +46,7 @@ import AccountEmpty from '../../../admin-page/other-admin-fuction/AccountEmpty.v
           const decodedToken = JSON.parse(atob(tokenParts[1]));
 
           this.userRole = decodedToken.role;
-          this.userName = decodedToken.name;
+          this.userName = decodedToken.username;
           console.log('User Name: ', this.userName); //check
         }
         catch (error){

@@ -17,6 +17,7 @@
                             :class="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'">
                         </i>
                     </div>
+                    <select v-model="role" id="role" disabled hidden></select>
                     <div class="justify-center flex">
                         <button type="submit" >Login</button>
                     </div>
@@ -40,6 +41,7 @@
             return{
                 username: '',
                 password: '',
+                role: '',
                 showPassword: false,
             };
         },
@@ -56,7 +58,8 @@
                         },
                         body: JSON.stringify({
                             Username: this.username,
-                            Password: this.password
+                            Password: this.password,
+                            Role: this.role
                         })
                     });
                     if (!response.ok){
@@ -69,6 +72,8 @@
 
                     if (result.message === 'Login successful!'){
                         localStorage.setItem('token', result.token);
+                        localStorage.setItem('username', result.username);
+                        localStorage.setItem('role', result.role)
                         this.$router.push({path: "/"});
                     }
                 }

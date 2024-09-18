@@ -10,13 +10,13 @@
 
 <script>
 import Logout from '../../authentication-page/Logout.vue';
-
     
 export default{
     components:{Logout},
     props:{
         userName:{
             type: String,
+            required:true,
             default: ''
         }
     },
