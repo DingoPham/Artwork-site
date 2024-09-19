@@ -1,9 +1,12 @@
 <template>
     <div class="authen-bg-main flex justify-center items-center">
+        <PopupNotification  v-if="showPopupNotify" 
+                            :forgetMessage="popupMessage"
+                            @hide="onPopupHide"/>
         <div class="bg-w">
             <h2 class="tx-center"> Forgot account </h2>
             <div class="authen-box flex flex-column items-center gap">
-                <form @submit.prevent="login" class="flex flex-column gap-10">
+                <form @submit.prevent="forget" class="flex flex-column gap-10">
                     <label for="email"> Email </label>
                     <input v-model="email" placeholder="Email" />
                     
@@ -27,32 +30,54 @@
 </template>
 
 <script>
+import PopupNotification from '../admin-page/other-admin-fuction/PopupNotification.vue';
+
     export default{
+        components:{PopupNotification},
         name: 'forget-password',
         data(){
             return {
-                email: ''
+                email: '',
+                showPopupNotify: false,
+                popupMessage: '',
             }
         },
         methods:{
-            async forgotPassword() {
+            async forget() {
                 try {
                     const response = await fetch('https://localhost:7064/ArtworkCombine/forget-password', {
                         method: 'POST',
                         headers:{
                             'Content-Type': 'Application/json'
                         },
-                        body:{
-                            Email: this.email
-                        }
+                        body: JSON.stringify({ 
+                            Email: this.email 
+                        })
                     });
+                    
                     const result = await response.json();
-                    alert(result.message);
+                    console.log("API Response: ", result);
+
+                    if(result.forgetMessage === 'Recovery notification sent!'){
+                        this.popupMessage = 'Recovery notification sent!';
+                    }
+                    else{
+                        this.popupMessage = 'Failed to send recovery information';
+                    }
+                    this.showPopupNotify = true;
                 } 
                 catch (error) {
-                    alert('Failed to send password reset instructions');
+                   console.error("Error");
                 }
-            }
+            },
+            onPopupHide(){
+                if(this.popupMessage === 'Recovery notification sent!'){
+                    this.showPopupNotify = false
+                }
+                else{
+                    this.showPopupNotify = false;
+                }
+            },
         }
     }
 </script>

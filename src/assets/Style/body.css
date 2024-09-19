@@ -25,6 +25,10 @@
     border-radius: 4px;
     box-shadow: 6px 10px 10px #000;
 }
+.bg-w .tx-center{
+    font-size: 40px;
+    font-weight: 500;
+}
 .authen-bg-main{
     font-weight: 500;
     font-size: 20px;

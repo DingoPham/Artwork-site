@@ -8,6 +8,7 @@ import Admin from '../components/admin-page/Admin.vue'
 import Register from '../components/authentication-page/Register.vue'
 import Login from '../components/authentication-page/Login.vue'
 import Forget from '../components/authentication-page/Forget.vue'
+import ConfirmForget from '../components/authentication-page/ConfirmForget.vue'
 
 Vue.use(Router)
 
@@ -49,6 +50,11 @@ export default new Router({
       path: '/forget-password',
       name: 'forget-password',
       component: Forget
+    },
+    {
+      path: '/reset-password',
+      name: 'reset-password',
+      component: ConfirmForget
     }
   ]
 })

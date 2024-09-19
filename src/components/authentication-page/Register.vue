@@ -1,5 +1,8 @@
 <template>
     <div class="authen-bg-main flex justify-center items-center">
+        <PopupNotification  v-if="showPopupNotify" 
+                            :registerMessage="popupMessage"
+                            @hide="onPopupHide"/>
         <div class="bg-w">
             <h2 class="tx-center"> Register </h2>
             <div class="authen-box flex flex-column items-center gap">
@@ -43,7 +46,10 @@
 </template>
 
 <script>
+import PopupNotification from '../admin-page/other-admin-fuction/PopupNotification.vue';
+
     export default{
+        components:{PopupNotification},
         name: 'register',
         data() {
             return {
@@ -53,6 +59,8 @@
                 age: '',
                 role: 'user',
                 showPassword: false,
+                showPopupNotify: false,
+                popupMessage: '',
             };
         },
         methods:{
@@ -74,24 +82,32 @@
                             Role: this.role
                         })
                     });
+                    if (!response.ok){
+                        throw new Error("Network response wasn't ok");
+                    }
 
                     const result = await response.json();
                     console.log('API response: ', result);
 
-                    alert(result.message);
-                    if (result.message === 'Registration successful'){
-                        console.log('Redirecting to login...');
-                        setTimeout(() => {
-                            this.$router.push({path: "/login"});
-                        }, 800);
+                    if (result.registerMessage === 'Registration Successful!'){
+                        this.popupMessage = 'Registration Successful!';
                     }
-                    else {
-                        console.error('Registration failed or message is not as expected:', result.message);
+                    else{
+                        this.popupMessage = 'Registration Failed...';
                     }
+                    this.PopupNotification = true;
                 }
                 catch(error){
-                    console.error('Error during registration:', error);
-                    alert('Registration failed');
+                    this.popupMessage = "Registration Failed...";
+                    this.showPopupNotify = true
+                }
+            },
+            onPopupHide(){
+                if(this.popupMessage === 'Registration Successful!'){
+                    this.$router.push({path: "/login"});
+                }
+                else{
+                    this.showPopupNotify = false;
                 }
             }
         }

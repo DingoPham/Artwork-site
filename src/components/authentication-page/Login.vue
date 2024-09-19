@@ -1,6 +1,8 @@
 <template>
     <div class="authen-bg-main flex justify-center items-center">
-        <PopupNotification v-if="showPopupNotify" :message = "popupMessage" @hide="onPopupHide"/>
+        <PopupNotification  v-if="showPopupNotify" 
+                            :loginMessage="popupMessage"
+                            @hide="onPopupHide"/>
         <div class="bg-w">
             <h2 class="tx-center"> Login </h2>
             <div class="authen-box flex flex-column items-center gap">
@@ -75,25 +77,29 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
                     const result = await response.json();
                     console.log("API response: ", result);
 
-                    if (result.message === 'Login successful!'){
+                    if (result.loginMessage === 'Login Successful!'){
                         localStorage.setItem('token', result.token);
                         localStorage.setItem('username', result.username);
-                        localStorage.setItem('role', result.role)
-                        
+                        localStorage.setItem('role', result.role);
+                        this.popupMessage = 'Login Successful!';
                     }
-
-                    this.popupMessage = 'Login Successful!';
+                    else{
+                        this.popupMessage = 'Login Failed...';
+                    }
                     this.showPopupNotify = true;
                 }
                 catch(error){
-                    console.log('Login failed: ', error)
-
-                    this.showMessage = "Login Failed...";
-                    this.showPopupNotify = true;
+                    this.popupMessage = "Login Failed...";
+                    this.showPopupNotify = true
                 }
             },
             onPopupHide(){
-                this.$router.push({path: "/"});
+                if(this.popupMessage === 'Login Successful!'){
+                    this.$router.push({path: "/"});
+                }
+                else{
+                    this.showPopupNotify = false;
+                }
             }
         }
     };
