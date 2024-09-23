@@ -40,26 +40,36 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
                 email: '',
                 showPopupNotify: false,
                 popupMessage: '',
-            }
+            };
         },
         methods:{
             async forget() {
                 try {
+                    if(!this.email){
+                        this.popupMessage = 'Please fill in all the required fields'
+                        this.showPopupNotify = true;
+                        return;
+                    }
+
                     const response = await fetch('https://localhost:7064/ArtworkCombine/forget-password', {
                         method: 'POST',
                         headers:{
-                            'Content-Type': 'Application/json'
+                            'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({ 
                             Email: this.email 
                         })
                     });
-                    
+
+                    if (!response.ok){
+                        throw new Error("Network response wasn't ok");
+                    }
+
                     const result = await response.json();
                     console.log("API Response: ", result);
 
-                    if(result.forgetMessage === 'Recovery notification sent!'){
-                        this.popupMessage = 'Recovery notification sent!';
+                    if(result.forgetMessage === 'Recovery notification sent'){
+                        this.popupMessage = 'Recovery notification sent';
                     }
                     else{
                         this.popupMessage = 'Failed to send recovery information';
@@ -67,16 +77,12 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
                     this.showPopupNotify = true;
                 } 
                 catch (error) {
-                   console.error("Error");
+                    this.popupMessage = 'Failed to send recovery information';
+                    this.showPopupNotify = true;
                 }
             },
             onPopupHide(){
-                if(this.popupMessage === 'Recovery notification sent!'){
-                    this.showPopupNotify = false
-                }
-                else{
-                    this.showPopupNotify = false;
-                }
+                this.showPopupNotify = false;
             },
         }
     }

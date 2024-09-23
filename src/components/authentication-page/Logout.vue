@@ -8,9 +8,9 @@
     export default{
         methods:{
             logout(){
-            localStorage.removeItem('token');
-            this.$emit('logged-out');
-            this.$router.push({path: "/login"})
+                localStorage.clear();
+                this.$emit('logged-out');
+                this.$router.push({path: "/login"})
             }
         }
     }

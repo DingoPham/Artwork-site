@@ -1,6 +1,8 @@
 <template>
-    <div>
-        <button v-if="userRole === 'admin'" @click="showPopup = true" class="button-f">Insert</button>
+    <div class="m-t-20">
+        <div class="flex justify-center">
+            <button v-if="userRole === 'admin'" @click="showPopup = true" class="button-f">Insert</button>
+        </div>
         <div v-if="showPopup" class="po-fixed po-fixed-mod bg-c-popup flex justify-center items-center">
             <div class="bg-c-white p-1 border-radius-5 h-500 w-800">
                 <h1>{{ editMode ? 'Update image' : 'Insert image' }}</h1>
@@ -26,6 +28,19 @@
             </div>
         </div>
 
+        <div class="flex m-t-20 over-hidden gap flex-wrap">
+            <div v-for="(image, index) in paginatedImages" :key="image.id" class="m-t-20 gap-5 img-slice"> 
+                <div class="flex gap-10 m-b">
+                    <button v-if="userRole === 'admin'" @click="updateImage(index)" class="button-f">Update</button>
+                    <button v-if="userRole === 'admin'" @click="deleteImage(image.id)" class="button-f">Delete</button>
+                </div>
+                <img :src="image.imgUrl" alt="" @click="showFullImage(image)" class="img"/>
+                <p>{{ image.iName }}</p>
+                <p>{{ image.describe }}</p>
+            </div>
+        </div>
+        
+
         <div v-if="showImagePopup" class="po-fixed po-fixed-mod bg-c-popup flex justify-center items-center">
             <div class="div">
                 <img :src="curruntImage.imgUrl" alt="">
@@ -33,16 +48,6 @@
                     <i style="font-size:24px" class="fa">&#xf00d;</i>
                 </div>
             </div>
-        </div>
-
-        <div v-for="(image, index) in paginatedImages" :key="image.id" class="m-t-20 flex flex-column gap-5 flex-baseline"> 
-            <div class="flex gap-10">
-                <button v-if="userRole === 'admin'" @click="updateImage(index)" class="button-f">Update</button>
-                <button v-if="userRole === 'admin'" @click="deleteImage(image.id)" class="button-f">Delete</button>
-            </div>
-            <img :src="image.imgUrl" alt="" @click="showFullImage(image)"/>
-            <p>{{ image.iName }}</p>
-            <p>{{ image.describe }}</p>
         </div>
         
         <PageChanger

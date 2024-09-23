@@ -2,7 +2,7 @@
     <div class="p-3 m-3">
       <AccountEmpty v-if="userRole === 'guest'"/>
       <AccountDetected v-if="userRole !== 'guest'" :userName="userName"/>
-      <div class="flex over-hidden flex-wrap gap-41">
+      <div>
         <SFWArtContent :userRole = "userRole"/>
       </div>
     </div>

@@ -8,7 +8,7 @@
             <div class="authen-box flex flex-column items-center gap">
                 <form @submit.prevent="register" class="flex flex-column gap-10">
                     <label for="email">Email</label>
-                    <input v-model="email" placeholder="Email"/>
+                    <input v-model="email" placeholder="Email" type="email"/>
 
                     <label for="username"> Username </label>
                     <input v-model="username" placeholder="Username" maxlength="20"/>
@@ -67,8 +67,13 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
             visiblePass(){
                 this.showPassword = !this.showPassword;
             },
-            async register(){
+            async register(){   
                 try{
+                    if(!this.email || !this.username || !this.password || !this.age){
+                        this.popupMessage = 'Please fill in all the required fields'
+                        this.showPopupNotify = true;
+                        return;
+                    }
                     const response = await fetch('https://localhost:7064/ArtworkCombine/register', {
                         method: 'POST',
                         headers: {
@@ -95,11 +100,11 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
                     else{
                         this.popupMessage = 'Registration Failed...';
                     }
-                    this.PopupNotification = true;
+                    this.showPopupNotify = true;
                 }
                 catch(error){
                     this.popupMessage = "Registration Failed...";
-                    this.showPopupNotify = true
+                    this.showPopupNotify = true;
                 }
             },
             onPopupHide(){

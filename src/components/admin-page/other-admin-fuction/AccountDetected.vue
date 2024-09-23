@@ -13,6 +13,10 @@ import Logout from '../../authentication-page/Logout.vue';
     
 export default{
     components:{Logout},
+    created(){
+        const{username} = this.getUserData();
+        this.userName= username;
+    },
     props:{
         userName:{
             type: String,
@@ -28,6 +32,19 @@ export default{
     methods:{
         handleLogout(){
             console.log("Goodbye!")
+        },
+        getUserData(){
+            let token = sessionStorage.getItem("token");
+            let username = sessionStorage.getItem("username");
+            let role = sessionStorage.getItem("role");
+
+            // If nothing in sessionStorage, check localStorage
+            if (!token || !username || !role) {
+                token = localStorage.getItem("token");
+                username = localStorage.getItem("username");
+                role = localStorage.getItem("role");
+            }
+            return{token, username, role};
         }
     }
 }

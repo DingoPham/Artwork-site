@@ -59,6 +59,12 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
             },
             async login(){
                 try{
+                    if(!this.username || !this.password){
+                        this.popupMessage = 'Please fill in all the required fields'
+                        this.showPopupNotify = true;
+                        return;
+                    }
+
                     const response = await fetch('https://localhost:7064/ArtworkCombine/login', {
                         method: 'POST',
                         headers:{
@@ -70,6 +76,7 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
                             Role: this.role
                         })
                     });
+                    
                     if (!response.ok){
                         throw new Error("Network response wasn't ok");
                     }

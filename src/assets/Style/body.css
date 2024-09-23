@@ -1,8 +1,14 @@
-.flex img{
-    width: 100%;
-    height: 100vh;
+.img-slice img{
+    display: flex;
+    width: 60vh;
+    height: 60vh;
     object-fit: cover;
     border-radius: 2%;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+}
+.img-slice img:hover{
+    transform: scale(0.95);
 }
 .border-radius-5{
     border-radius: 5px;
@@ -73,6 +79,14 @@
 .authen-box form button:active{
     transform: scale(0.95);
 }
+.authen-box form .re input{
+    width: 20px;
+    margin: 0;
+}
+.authen-box form .re p{
+    font-size: 15px;
+    color: #5f5f5f;
+}
 .note{
     color: #a0a0a0;
     font-style: italic;
@@ -137,14 +151,6 @@ div hr{
     font-size: 20px;
     display: flex;
 }
-.m-t-20 img{
-    cursor: pointer;
-    transition: transform 0.5s ease;
-}
-.m-t-20 img:hover{
-    transform: scale(0.95);
-}
-.flex div img{
-    max-width: 100%;
-    max-height: 100%;
+.flex .div img{
+    height: 95vh;
 }

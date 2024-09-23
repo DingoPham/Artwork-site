@@ -6,21 +6,24 @@
                     <h1>{{ loginMessage }}</h1>
                     <img v-if="loginMessage === 'Login Successful!'" src="../../../assets/Approved.gif" alt="" class="icon">
                     <img v-if="loginMessage === 'Login Failed...'" src="../../../assets/Denined.gif" alt="" class="icon"/>
+                    <img v-if="loginMessage === 'Please fill in all the required fields'" src="../../../assets/Warning.gif" alt="" class="icon">
                 </div>
                 <div class="register">
                     <h1>{{ registerMessage }}</h1>
                     <img v-if="registerMessage === 'Registration Successful!'" src="../../../assets/Approved.gif" alt="" class="icon">
                     <img v-if="registerMessage === 'Registration Failed...'" src="../../../assets/Denined.gif" alt="" class="icon"/>
+                    <img v-if="registerMessage === 'Please fill in all the required fields'" src="../../../assets/Warning.gif" alt="" class="icon">
                 </div>
                 <div class="forget">
                     <h1>{{ forgetMessage }}</h1>
-                    <img v-if="forgetMessage === 'Recovery notification sent!'" src="../../../assets/Approved.gif" alt="" class="icon">
+                    <img v-if="forgetMessage === 'Recovery notification sent'" src="../../../assets/Approved.gif" alt="" class="icon">
                     <img v-if="forgetMessage === 'Failed to send recovery information'" src="../../../assets/Denined.gif" alt="" class="icon"/>
+                    <img v-if="forgetMessage === 'Please fill in all the required fields'" src="../../../assets/Warning.gif" alt="" class="icon">
                 </div>
                 <div class="confirm-forget">
-                    <h1>{{ connfirmMessage }}</h1>
-                    <img v-if="connfirmMessage === 'Submit Successful!'" src="../../../assets/Approved.gif" alt="" class="icon">
-                    <img v-if="connfirmMessage === 'Submit Failed...'" src="../../../assets/Denined.gif" alt="" class="icon"/>
+                    <h1>{{ confirmMessage }}</h1>
+                    <img v-if="confirmMessage === 'Submit Successful!'" src="../../../assets/Approved.gif" alt="" class="icon">
+                    <img v-if="confirmMessage === 'Submit Failed...'" src="../../../assets/Denined.gif" alt="" class="icon"/>
                 </div>
             </div>
         </div>
@@ -29,7 +32,7 @@
 
 <script>
 export default{
-    props:['loginMessage','registerMessage','forgetMessage','connfirmMessage'],
+    props:['loginMessage','registerMessage','forgetMessage','confirmMessage'],
     data(){
         return{
             show: true,
@@ -39,7 +42,7 @@ export default{
         setTimeout(() => {
             this.showPopup = false;
             this.$emit('hide');
-        }, 200000);
+        }, 2000);
     },
 };
 </script>
