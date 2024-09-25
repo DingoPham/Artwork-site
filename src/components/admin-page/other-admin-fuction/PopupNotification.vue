@@ -21,9 +21,11 @@
                     <img v-if="forgetMessage === 'Please fill in all the required fields'" src="../../../assets/Warning.gif" alt="" class="icon">
                 </div>
                 <div class="confirm-forget">
-                    <h1>{{ confirmMessage }}</h1>
-                    <img v-if="confirmMessage === 'Submit Successful!'" src="../../../assets/Approved.gif" alt="" class="icon">
-                    <img v-if="confirmMessage === 'Submit Failed...'" src="../../../assets/Denined.gif" alt="" class="icon"/>
+                    <h1>{{ resetMessage }}</h1>
+                    <img v-if="resetMessage === 'Password successful reset!'" src="../../../assets/Approved.gif" alt="" class="icon">
+                    <img v-if="resetMessage === 'Password reset failed'" src="../../../assets/Denined.gif" alt="" class="icon"/>
+                    <img v-if="resetMessage === 'Please fill in all the required fields'" src="../../../assets/Warning.gif" alt="" class="icon">
+                    <img v-if="resetMessage === 'Password do not match!'" src="../../../assets/Warning.gif" alt="" class="icon">
                 </div>
             </div>
         </div>
@@ -32,7 +34,7 @@
 
 <script>
 export default{
-    props:['loginMessage','registerMessage','forgetMessage','confirmMessage'],
+    props:['loginMessage','registerMessage','forgetMessage','resetMessage'],
     data(){
         return{
             show: true,
