@@ -51,13 +51,13 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
                         return;
                     }
 
-                    const response = await fetch('https://localhost:7064/ArtworkCombine/forget-password', {
+                    const response = await fetch('https://localhost:7064/Authentication/forget-password', {
                         method: 'POST',
                         headers:{
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({ 
-                            Email: this.email 
+                            Email: this.email,
                         })
                     });
 

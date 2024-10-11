@@ -32,13 +32,6 @@
                     <div class="justify-center flex">
                         <button type="submit" >Submit</button>
                     </div>
-                    
-                    <label for="/">Don't have an account?
-                        <router-link to="/register">Sign up</router-link>
-                    </label>
-                    <label for="/">
-                        <router-link to="/forget-password">Forgot account?</router-link>
-                    </label>
                 </form> 
             </div>
         </div>
@@ -84,22 +77,30 @@ export default{
 
                 const urlParam = new URLSearchParams(window.location.search);
                 const token = urlParam.get('token');
+                console.log("token from URL: ", token);
 
                 if(!token){ 
-                    console.log("Invalid or missing token");
+                    console.log("Invalid or expired token");
+                    this.popupMessage = 'Invalid or expired token';
+                    this.showPopupNotify = true;
                     return;
                 }
 
-                const response = await fetch('https://localhost:7064/ArtworkCombine/reset-password', {
+                const response = await fetch(`https://localhost:7064/Authentication/reset-password?token=${token}`, {
                         method: 'POST',
                         headers:{
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({ 
-                            token: token,
                             newPassword: this.password
                     })
                 });
+
+                if (!response.ok) {
+                    console.log(`HTTP error! status: ${response.status}`);
+                    this.popupMessage = 'Password reset failed';
+                    this.showPopupNotify = true;
+                }
 
                 const result = await response.json();
                 console.log("API response: ", result);
@@ -118,7 +119,12 @@ export default{
             }
         },
         onPopupHide(){
-            this.showPopupNotify = false;
+            if(this.popupMessage === 'Password successful reset!'){
+                this.$router.push({path: "/login"});
+            }
+            else{
+                this.showPopupNotify = false;
+            }
         },
     }
 }

@@ -28,7 +28,7 @@
             </div>
         </div>
 
-        <div class="flex m-t-20 over-hidden gap flex-wrap">
+        <div class="flex m-t-20 over-hidden gap-18 flex-wrap">
             <div v-for="(image, index) in paginatedImages" :key="image.id" class="m-t-20 gap-5 img-slice"> 
                 <div class="flex gap-10 m-b">
                     <button v-if="userRole === 'admin'" @click="updateImage(index)" class="button-f">Update</button>
@@ -141,7 +141,7 @@
             },
 
             fetchImages(){
-                fetch('https://localhost:7064/ArtworkCombine')
+                fetch('https://localhost:7064/SFW')
                 .then(response => response.json())
                 .then(data => {
                     this.images = [...data.list_data_sfwart,]
@@ -169,7 +169,7 @@
                 };
 
                 if (this.editMode){
-                    fetch(`https://localhost:7064/ArtworkCombine/put/${this.images[this.editIndex].id}`,{
+                    fetch(`https://localhost:7064/SFW/put/${this.images[this.editIndex].id}`,{
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -184,7 +184,7 @@
                     });
                 }
                 else{
-                    fetch('https://localhost:7064/ArtworkCombine/post',{
+                    fetch('https://localhost:7064/SFW/post',{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -227,7 +227,7 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                fetch('https://localhost:7064/ArtworkCombine/del/', {
+                fetch('https://localhost:7064/SFW/del/', {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })

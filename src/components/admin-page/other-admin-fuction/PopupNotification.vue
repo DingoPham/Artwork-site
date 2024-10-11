@@ -26,6 +26,7 @@
                     <img v-if="resetMessage === 'Password reset failed'" src="../../../assets/Denined.gif" alt="" class="icon"/>
                     <img v-if="resetMessage === 'Please fill in all the required fields'" src="../../../assets/Warning.gif" alt="" class="icon">
                     <img v-if="resetMessage === 'Password do not match!'" src="../../../assets/Warning.gif" alt="" class="icon">
+                    <img v-if="resetMessage === 'Invalid or expired token'" src="../../../assets/Warning.gif" alt="" class="icon">
                 </div>
             </div>
         </div>

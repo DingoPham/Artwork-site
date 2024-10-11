@@ -65,7 +65,7 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
                         return;
                     }
 
-                    const response = await fetch('https://localhost:7064/ArtworkCombine/login', {
+                    const response = await fetch('https://localhost:7064/Authentication/login', {
                         method: 'POST',
                         headers:{
                             'Content-Type': 'application/json'

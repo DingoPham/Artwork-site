@@ -74,7 +74,7 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
                         this.showPopupNotify = true;
                         return;
                     }
-                    const response = await fetch('https://localhost:7064/ArtworkCombine/register', {
+                    const response = await fetch('https://localhost:7064/Authentication/register', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
