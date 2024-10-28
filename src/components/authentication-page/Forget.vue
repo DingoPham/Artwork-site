@@ -15,7 +15,7 @@
                     </div>
                     
                     <label for="/">Remember your account?
-                        <router-link to="/login">Sign in</router-link>
+                        <router-link to="/login">Login</router-link>
                     </label>
                     <label for="/">
                         <router-link to="/register">Or don't have an account yet...</router-link>

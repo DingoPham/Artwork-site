@@ -4,7 +4,6 @@ import Router from 'vue-router'
 import Home from '../components/user-page/Home.vue'
 import Video from '../components/user-page/Video.vue'
 import NSFW from '../components/user-page/NSFW.vue'
-import Admin from '../components/admin-page/Admin.vue'
 import Register from '../components/authentication-page/Register.vue'
 import Login from '../components/authentication-page/Login.vue'
 import Forget from '../components/authentication-page/Forget.vue'
@@ -30,11 +29,6 @@ export default new Router({
       path: '/nsfw-gallery',
       name: 'nsfw-gallery',
       component: NSFW
-    },
-    {
-      path: '/admin',
-      name: 'admin',
-      component: Admin
     },
     {
       path: '/register',

@@ -58,7 +58,7 @@ export default{
         border-radius: 4px;
         animation: boxChange 0.5s ease forwards;
     }
-    .login, .register, .forget, .confirm-forget{
+    .login, .register, .forget, .confirm-forget, .nsfw-content{
         display: flex;
         flex-direction: column;
         align-items: center;

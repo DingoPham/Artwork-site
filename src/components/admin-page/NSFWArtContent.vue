@@ -8,19 +8,19 @@
                 <h1>{{ editMode ? 'Update image' : 'Insert image' }}</h1>
 
                 <form @submit.prevent="saveImage" class="flex flex-column gap">
-                    <label for="img-type" class="f-20 bold">- Safe For Work Art -</label>
+                    <label for="img-type" class="f-20 bold">- Not Safe For Work Art -</label>
                     <input v-model="imgType" id="img-type" disabled hidden></input>
                     
                     <label for="img-url">URL's image: </label>
-                    <input v-model="imgUrl" id="img-url" type="text" placeholder="Type image's URL here">
+                    <input v-model="imgNsfwUrl" id="img-url" type="text" placeholder="Type image's URL here">
 
                     <label for="img-name">Image name: </label>
-                    <input v-model="imgName" id="img-name" type="text" placeholder="Type image's name here">
+                    <input v-model="imgNsfwName" id="img-name" type="text" placeholder="Type image's name here">
 
                     <label for="img-des">Image describe: </label>
-                    <input v-model="imgDescribe" id="img-des" type="text" placeholder="Type image's describe here">
+                    <input v-model="imgNsfwDescribe" id="img-des" type="text" placeholder="Type image's describe here">
 
-                    <div class="flex flex-column gap-10 items-end">
+                    <div class="flex flex-column gap-10 items-end  ">
                         <button type="submit" class="button-f">{{ editMode ? 'Update' : 'Insert' }}</button>
                         <button type="button" class="button-f" @click="closePopup">Cancle</button>
                     </div>
@@ -34,8 +34,8 @@
                     <button v-if="userRole === 'admin'" @click="updateImage(index)" class="button-f">Update</button>
                     <button v-if="userRole === 'admin'" @click="deleteImage(image.id)" class="button-f">Delete</button>
                 </div>
-                <img :src="image.imgUrl" alt="" @click="showFullImage(image)" class="img"/>
-                <p>{{ image.imgName }}</p>
+                <img :src="image.imgNsfwUrl" alt="" @click="showFullImage(image)" class="img"/>
+                <p>{{ image.imgNsfwName }}</p>
                 <p>{{ image.describe }}</p>
             </div>
         </div>
@@ -43,7 +43,7 @@
 
         <div v-if="showImagePopup" class="po-fixed po-fixed-mod bg-c-popup flex justify-center items-center">
             <div class="div">
-                <img :src="curruntImage.imgUrl" alt="">
+                <img :src="curruntImage.imgNsfwUrl" alt="">
                 <div @click="showImagePopup = false">
                     <i style="font-size:24px" class="fa">&#xf00d;</i>
                 </div>
@@ -68,10 +68,10 @@
             return{
                 showPopup: false,
                 editMode: false,
-                imgType: 'sfw_art', // type
-                imgUrl: '',
-                imgName: '',
-                imgDescribe: '',
+                imgType: 'nsfw_art', // type
+                imgNsfwUrl: '',
+                imgNsfwName: '',
+                imgNsfwDescribe: '',
                 editIndex: null,
                 images: [],
                 userRole: '', // track role
@@ -91,8 +91,14 @@
             }
         },
         created(){
-            this.fetchImages();
-            this.checkUserRole();
+            const token = localStorage.getItem('token');
+            if(!token){
+                this.$router.push({path: "/"})
+            }
+            else{
+                this.fetchImages();
+                this.checkUserRole();
+            }
         },
         methods:{
             showFullImage(image){
@@ -131,51 +137,66 @@
             },
             closePopup(){
                 this.showPopup = false;
-                this.imgUrl = '';
-                this.imgName = '';
-                this.imgDescribe = '';
-                this.imgType = 'sfw_art'; // close popup with this type
+                this.imgNsfwUrl = '';
+                this.imgNsfwName = '';
+                this.imgNsfwDescribe = '';
+                this.imgType = 'nsfw_art'; // close popup with this type
                 this.editMode = false;
                 this.editIndex = null;
             },
-
             fetchImages(){
-                fetch('https://localhost:7064/SFW')
-                .then(response => response.json())
+                fetch('https://localhost:7064/NSFW', {
+                    headers: {
+                        'Authorization' : `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type' : 'application/json'
+                    },
+                })
+                .then(response => {
+                    if(!response.ok){
+                        if(response.status === 400){
+                            alert('You must be at least 18 years old to access this content!');
+                            this.$router.push({ path: "/" });
+                        }
+                        else if(response.status === 401){
+                            alert('You need to sign in to gain access to here!');
+                            this.$router.push({ path: "/" });
+                        }
+                        throw new Error('Failed to fetch images');
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    this.images = [...data.list_data_sfwart]
+                    this.images = [...data.list_data_nsfwart]
                 })
                 .catch(error => {
                 console.error('Can not get any images, error:', error);
                 });
             },
-
             saveImage(){
                 const imgData = {
-                    imgUrl: this.imgUrl,
-                    imgName: this.imgName,
-                    describe: this.imgDescribe
+                    imgNsfwUrl: this.imgNsfwUrl,
+                    imgNsfwName: this.imgNsfwName,
+                    describe: this.imgNsfwDescribe
                 };
 
                 console.log("Data test:", imgData);
 
                 const type = this.imgType; // selected type
                 const token = localStorage.getItem('token'); // get token from local storage
-
                 const headers = {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
                 if (this.editMode){
-                    fetch(`https://localhost:7064/SFW/put/${this.images[this.editIndex].id}`,{
+                    fetch(`https://localhost:7064/NSFW/put/${this.images[this.editIndex].id}`,{ 
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
                     })
                     .then(response => response.json())
                     .then(() => {
-                        this.images[this.editIndex] = {imgData};
+                        this.images[this.editIndex] = { ...imgData};
                         this.closePopup();
                     })
                     .catch(error => {
@@ -183,7 +204,7 @@
                     });
                 }
                 else{
-                    fetch('https://localhost:7064/SFW/post',{
+                    fetch('https://localhost:7064/NSFW/post',{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -212,13 +233,13 @@
                 this.editMode = true;
                 this.showPopup = true;
                 this.editIndex = index;
-                this.imgType = this.images[index].imgType || 'sfw_art'; //add type for pre-fill
-                this.imgUrl = this.images[index].imgUrl;
-                this.imgName = this.images[index].imgName;
-                this.imgDescribe = this.images[index].describe;
+                this.imgType = this.images[index].imgType || 'nsfw_art'; //add type for pre-fill
+                this.imgNsfwUrl = this.images[index].imgNsfwUrl;
+                this.imgNsfwName = this.images[index].imgNsfwName;
+                this.imgNsfwDescribe = this.images[index].describe;
             },
             deleteImage(id){
-                const type = this.images.find(image => image.id === id).imgType || 'sfw_art';
+                const type = this.images.find(image => image.id === id).imgType || 'nsfw_art';
                 const token = localStorage.getItem('token');
 
                 const headers = {
@@ -226,7 +247,7 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                fetch('https://localhost:7064/SFW/del/', {
+                fetch('https://localhost:7064/NSFW/del/', {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })

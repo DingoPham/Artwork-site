@@ -47,7 +47,6 @@ import AccountEmpty from '../../../admin-page/other-admin-fuction/AccountEmpty.v
 
           this.userRole = decodedToken.role;
           this.userName = decodedToken.username;
-          console.log('User Name: ', this.userName); //check
         }
         catch (error){
           console.error('Error decoding token: ', error);

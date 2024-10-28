@@ -1,11 +1,58 @@
 <template>
-    <div class="content p-1 m-3">
-        <h2>Video Content Area</h2>
-        <p>This is the main content of the website. All content will shift to the right when the sidebar is opened.</p>
-      </div>
+  <div class="p-3 m-3">
+    <AccountEmpty v-if="userRole === 'guest'"/>
+    <AccountDetected v-if="userRole !== 'guest'" :userName="userName"/>
+    <div>
+      <VideoArtContent :userRole = "userRole"/>
+    </div>
+  </div>
 </template>
 
 <script>
-  export default{
+import VideoArtContent from '../../../admin-page/VideoArtContent.vue';
+import AccountDetected from '../../../admin-page/other-admin-fuction/AccountDetected.vue';
+import AccountEmpty from '../../../admin-page/other-admin-fuction/AccountEmpty.vue';
+export default{
+  components:{
+    VideoArtContent, AccountEmpty, AccountDetected
+  },
+  data(){
+    return{
+      userRole: 'guest', //default value for guest
+      userName: ''
+    };
+  },
+  created(){
+    this.checkUserRole()
+  },
+  methods:{
+    checkUserRole(){
+      const token = localStorage.getItem('token');
+
+      if(!token){
+        this.userRole = 'guest'; // default role for unknow guest if can't find token
+        return;
+      }
+
+      // check token format
+      const tokenParts = token.split('.');
+      if(tokenParts.length !== 3){
+        this.userRole = 'guest';
+        return;
+      }
+
+      try{
+        // get role 
+        const decodedToken = JSON.parse(atob(tokenParts[1]));
+
+        this.userRole = decodedToken.role;
+        this.userName = decodedToken.username;
+      }
+      catch (error){
+        console.error('Error decoding token: ', error);
+        this.userRole = 'guest';
+      }
+    }
   }
+};
 </script>

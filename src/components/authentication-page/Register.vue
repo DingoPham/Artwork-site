@@ -26,7 +26,7 @@
                     </div>
 
                     <label for="age">Age</label>
-                    <input v-model="age" placeholder="Age" type="number" :min="0" :max="100"/>
+                    <input v-model="age" placeholder="Age" type="date"/>
                     
                     <div class="justify-center flex">
                         <button type="submit" >Register</button>
@@ -34,7 +34,7 @@
                     
                     <label for="/">Already have an account?
                         <router-link to="/login">
-                            Sign in
+                            Login
                         </router-link>
                     </label>
 
