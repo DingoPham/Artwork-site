@@ -5,7 +5,7 @@
                 <div class="login">
                     <h1>{{ loginMessage }}</h1>
                     <img v-if="loginMessage === 'Login Successful!'" src="../../../assets/Approved.gif" alt="" class="icon">
-                    <img v-if="loginMessage === 'Login Failed...'" src="../../../assets/Denined.gif" alt="" class="icon"/>
+                    <img v-if="loginMessage === 'Incorrect username or password'" src="../../../assets/Denined.gif" alt="" class="icon"/>
                     <img v-if="loginMessage === 'Please fill in all the required fields'" src="../../../assets/Warning.gif" alt="" class="icon">
                 </div>
                 <div class="register">

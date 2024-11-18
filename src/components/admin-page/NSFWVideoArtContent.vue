@@ -8,7 +8,7 @@
                 <h1>{{ editMode ? 'Update video' : 'Insert video' }}</h1>
 
                 <form @submit.prevent="saveVideo" class="flex flex-column gap">
-                    <label for="video-type" class="f-20 bold">- Video -</label>
+                    <label for="video-type" class="f-20 bold">- Not safe for work video -</label>
                     <input v-model="videoType" id="video-type" disabled hidden></input>
                     
                     <label for="video-url">URL's video: </label>
@@ -58,7 +58,7 @@
             return{
                 showPopup: false,
                 editMode: false,
-                videoType: 'video', // type
+                videoType: 'nsfw-video', // type
                 videoUrl: '',
                 videoName: '',
                 videoDescribe: '',
@@ -125,12 +125,12 @@
                 this.videoUrl = '';
                 this.videoName = '';
                 this.videoDescribe = '';
-                this.videoType = 'video'; // close popup with this type
+                this.videoType = 'nsfw-video'; // close popup with this type
                 this.editMode = false;
                 this.editIndex = null;
             },
             fetchVideos(){
-                fetch('https://localhost:7064/Video', {
+                fetch('https://localhost:7064/NSFWVideo', {
                     headers: {
                         'Authorization' : `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type' : 'application/json'
@@ -151,7 +151,7 @@
                     return response.json();
                 })
                 .then(data => {
-                    this.videos = [...data.list_data_video]
+                    this.videos = [...data.list_data_nsfwvideo]
                 })
                 .catch(error => {
                 console.error('Can not get any videos, error:', error);
@@ -174,7 +174,7 @@
                 };
 
                 if (this.editMode){
-                    fetch(`https://localhost:7064/Video/put/${this.videos[this.editIndex].id}`,{ 
+                    fetch(`https://localhost:7064/NSFWVideo/put/${this.videos[this.editIndex].id}`,{ 
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: videoData})
@@ -189,7 +189,7 @@
                     });
                 }
                 else{
-                    fetch('https://localhost:7064/Video/post',{
+                    fetch('https://localhost:7064/NSFWVideo/post',{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: videoData})
@@ -218,13 +218,13 @@
                 this.editMode = true;
                 this.showPopup = true;
                 this.editIndex = index;
-                this.videoType = this.videos[index].videoType || 'video'; //add type for pre-fill
+                this.videoType = this.videos[index].videoType || 'nsfw-video'; //add type for pre-fill
                 this.videoUrl = this.videos[index].videoUrl;
                 this.videoName = this.videos[index].videoName;
                 this.videoDescribe = this.videos[index].describe;
             },
             deleteVideo(id){
-                const type = this.videos.find(video => video.id === id).videoType || 'video';
+                const type = this.videos.find(video => video.id === id).videoType || 'nsfw-video';
                 const token = localStorage.getItem('token');
 
                 const headers = {
@@ -232,7 +232,7 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                fetch('https://localhost:7064/Video/del/', {
+                fetch('https://localhost:7064/NSFWVideo/del/', {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })

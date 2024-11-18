@@ -10,6 +10,7 @@
           <HomeContent v-if="currentComponent === 'home'" />
           <NSFWContent v-if="currentComponent === 'nsfw'" />
           <VideoContent v-if="currentComponent === 'video'" />
+          <NSFWVideoContent v-if="currentComponent === 'nsfwvideo'" />
         </content>
       <Footer />
     </div>
@@ -18,13 +19,14 @@
   <script>
 import HomeContent from '../user-part/body-content/HomeContent.vue';
 import NSFWContent from '../user-part/body-content/NSFWContent.vue';
+import NSFWVideoContent from '../user-part/body-content/NSFWVideoContent.vue';
 import VideoContent from '../user-part/body-content/VideoContent.vue';
 import Footer from '../user-part/Footer.vue';
 import HeaderLite from '../user-part/HeaderLite.vue';
 import SidebarIcon from './SidebarIcon.vue';
 
   export default {
-    components:{ Footer, HeaderLite, SidebarIcon, HomeContent, NSFWContent, VideoContent},
+    components:{ Footer, HeaderLite, SidebarIcon, HomeContent, NSFWContent, VideoContent, NSFWVideoContent},
     props: {
       isActive: {
         type: Boolean,

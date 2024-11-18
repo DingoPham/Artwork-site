@@ -91,12 +91,12 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
                         this.popupMessage = 'Login Successful!';
                     }
                     else{
-                        this.popupMessage = 'Login Failed...';
+                        this.popupMessage = 'Incorrect username or password';
                     }
                     this.showPopupNotify = true;
                 }
                 catch(error){
-                    this.popupMessage = "Login Failed...";
+                    this.popupMessage = "Incorrect username or password";
                     this.showPopupNotify = true
                 }
             },

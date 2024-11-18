@@ -5,6 +5,7 @@
         <router-link to="/">Art Gallery</router-link>
         <router-link to="/nsfw-gallery">NSFW Gallery</router-link>
         <router-link to="/video-gallery">Video Gallery</router-link>
+        <router-link to="/nsfw-video-gallery">NSFW Video Gallery</router-link>
         <p class="m-b tx-w f-30-n">Support Me</p>
         <a href="https://www.youtube.com/channel/UCtH0_zKVeXOKO2hiqLoHSrg">Follow my Youtube</a>
         <a href="https://buymeacoffee.com/dingopham763/membership">Buy me a coffee</a>

@@ -8,6 +8,7 @@ import Register from '../components/authentication-page/Register.vue'
 import Login from '../components/authentication-page/Login.vue'
 import Forget from '../components/authentication-page/Forget.vue'
 import ConfirmForget from '../components/authentication-page/ConfirmForget.vue'
+import NSFWVideo from '../components/user-page/NSFWVideo.vue'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
       path: '/nsfw-gallery',
       name: 'nsfw-gallery',
       component: NSFW
+    },
+    {
+      path: '/nsfw-video-gallery',
+      name: 'nsfw-video-gallery',
+      component: NSFWVideo
     },
     {
       path: '/register',

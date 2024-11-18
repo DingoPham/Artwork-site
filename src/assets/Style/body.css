@@ -18,6 +18,11 @@
     border-radius: 2%;
     cursor: pointer;
 }
+video:fullscreen {
+    width: 100vw; /* Chiều rộng đầy màn hình */
+    height: 100vh; /* Chiều cao đầy màn hình */
+    object-fit: contain; /* Giữ tỷ lệ ban đầu */
+}
 .border-radius-5{
     border-radius: 5px;
 }
