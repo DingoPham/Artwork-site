@@ -187,3 +187,15 @@ body{
     outline: none;
     margin: 0;
 }
+/*-----------------------------------*/
+@media (max-width: 768px) {
+    .m-3-2{
+        margin: 10px;
+    }
+    .p-3-2{
+        padding: 10px;
+    }
+    .flex-reverse-2{
+        flex-direction: row-reverse;
+    }
+}

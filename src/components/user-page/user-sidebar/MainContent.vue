@@ -1,6 +1,6 @@
 <template>
     <div class="m-c" :class="{ shift: isActive }">
-      <header class="navbar flex ">
+      <header class="navbar flex flex-reverse-2">
         <div @click="$emit('toggle-sidebar')" class="h-16 m-22">
           <SidebarIcon />
         </div>

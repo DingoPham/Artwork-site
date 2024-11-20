@@ -1,5 +1,5 @@
 <template>
-    <footer class="footer tx-w w-p-100 h-200 flex flex-column items-center">
+    <footer class="footer tx-w p-1 h-200 flex flex-column items-center">
         <h1>If you are interested, please follow below these platforms</h1>
         <div class="flex gap">
             <a href="https://www.pixiv.net/en/users/42395789">

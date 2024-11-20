@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 m-3">
+  <div class="p-3-2 m-3-2">
     <AccountEmpty v-if="userRole === 'guest'"/>
     <AccountDetected v-if="userRole !== 'guest'" :userName="userName"/>
     <div>
