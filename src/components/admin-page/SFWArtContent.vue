@@ -140,7 +140,8 @@
             },
 
             fetchImages(){
-                fetch('https://localhost:7064/SFW')
+                const baseUrl = process.env.VUE_APP_API_BASE_URL;
+                fetch(`${baseUrl}/SFW`)
                 .then(response => response.json())
                 .then(data => {
                     this.images = [...data.list_data_sfwart]
@@ -168,7 +169,8 @@
                 };
 
                 if (this.editMode){
-                    fetch(`https://localhost:7064/SFW/put/${this.images[this.editIndex].id}`,{
+                    const baseUrl = process.env.VUE_APP_API_BASE_URL;
+                    fetch(`${baseUrl}/SFW/put/${this.images[this.editIndex].id}`,{
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -183,7 +185,8 @@
                     });
                 }
                 else{
-                    fetch('https://localhost:7064/SFW/post',{
+                    const baseUrl = process.env.VUE_APP_API_BASE_URL;
+                    fetch(`${baseUrl}/SFW/post`,{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -226,7 +229,8 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                fetch('https://localhost:7064/SFW/del/', {
+                const baseUrl = process.env.VUE_APP_API_BASE_URL;
+                fetch(`${baseUrl}/SFW/del/`, {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })

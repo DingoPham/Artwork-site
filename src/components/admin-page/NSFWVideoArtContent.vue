@@ -130,7 +130,8 @@
                 this.editIndex = null;
             },
             fetchVideos(){
-                fetch('https://localhost:7064/NSFWVideo', {
+                const baseUrl = process.env.VUE_APP_API_BASE_URL;
+                fetch(`${baseUrl}/NSFWVideo`, {
                     headers: {
                         'Authorization' : `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type' : 'application/json'
@@ -174,7 +175,8 @@
                 };
 
                 if (this.editMode){
-                    fetch(`https://localhost:7064/NSFWVideo/put/${this.videos[this.editIndex].id}`,{ 
+                    const baseUrl = process.env.VUE_APP_API_BASE_URL;
+                    fetch(`${baseUrl}/put/${this.videos[this.editIndex].id}`,{ 
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: videoData})
@@ -189,7 +191,8 @@
                     });
                 }
                 else{
-                    fetch('https://localhost:7064/NSFWVideo/post',{
+                    const baseUrl = process.env.VUE_APP_API_BASE_URL;
+                    fetch(`${baseUrl}/NSFWVideo/post`,{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: videoData})
@@ -232,7 +235,8 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                fetch('https://localhost:7064/NSFWVideo/del/', {
+                const baseUrl = process.env.VUE_APP_API_BASE_URL;
+                fetch(`${baseUrl}/NSFWVideo/del/`, {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })
