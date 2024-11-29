@@ -130,8 +130,7 @@
                 this.editIndex = null;
             },
             fetchVideos(){
-                const baseUrl = process.env.VUE_APP_API_BASE_URL;
-                fetch(`${baseUrl}/Video`, {
+                fetch('https://localhost:7064/Video', {
                     headers: {
                         'Authorization' : `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type' : 'application/json'
@@ -175,8 +174,7 @@
                 };
 
                 if (this.editMode){
-                    const baseUrl = process.env.VUE_APP_API_BASE_URL;
-                    fetch(`${baseUrl}/Video/put/${this.videos[this.editIndex].id}`,{ 
+                    fetch(`https://localhost:7064/Video/put/${this.videos[this.editIndex].id}`,{ 
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: videoData})
@@ -191,8 +189,7 @@
                     });
                 }
                 else{
-                    const baseUrl = process.env.VUE_APP_API_BASE_URL;
-                    fetch(`${baseUrl}/Video/post`,{
+                    fetch('https://localhost:7064/Video/post',{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: videoData})
@@ -235,8 +232,7 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                const baseUrl = process.env.VUE_APP_API_BASE_URL;
-                fetch(`${baseUrl}/Video/del/`, {
+                fetch('https://localhost:7064/Video/del/', {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })
