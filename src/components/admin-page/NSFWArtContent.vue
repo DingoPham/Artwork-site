@@ -20,7 +20,7 @@
                     <label for="img-des">Image describe: </label>
                     <input v-model="imgNsfwDescribe" id="img-des" type="text" placeholder="Type image's describe here">
 
-                    <div class="flex flex-column gap-10 items-end  ">
+                    <div class="flex flex-column gap-10 items-end">
                         <button type="submit" class="button-f">{{ editMode ? 'Update' : 'Insert' }}</button>
                         <button type="button" class="button-f" @click="closePopup">Cancle</button>
                     </div>
@@ -28,7 +28,7 @@
             </div>
         </div>
 
-        <div class="flex m-t-20 over-hidden gap-18 flex-wrap">
+        <div class="flex m-t-20 over-hidden gap-18 flex-wrap justify-center-2">
             <div v-for="(image, index) in paginatedImages" :key="image.id" class="m-t-20 gap-5 img-slice"> 
                 <div class="flex gap-10 m-b">
                     <button v-if="userRole === 'admin'" @click="updateImage(index)" class="button-f">Update</button>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="flex flex-column">
-            <div class="flex justify-center gap pc">
+            <div class="flex justify-center gap pc m-t-b">
                 <button @click="prevPage" :disabled="curruntPage === 1"> 
                     <span>&#8592;</span>
                 </button>

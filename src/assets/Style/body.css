@@ -167,3 +167,25 @@ div hr{
 .flex .div img{
     height: 95vh;
 }
+/*-----------------------------------*/
+@media (max-width: 768px) {
+    .img-slice img{
+        width: 15vh;
+        height: 15vh;
+    }
+    .img-slice img:hover {
+        transform: none;
+    }
+    .flex .div img {
+        width: 100%;
+        height: 50vh;
+    }
+    .m-t-b{
+        padding: 10px 0;
+        margin: 5px;
+    }
+    .img-slice video{
+        width: 40vh;
+        height: 40vh;
+    }
+}

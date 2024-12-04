@@ -198,4 +198,7 @@ body{
     .flex-reverse-2{
         flex-direction: row-reverse;
     }
+    .justify-center-2{
+        justify-content: center;
+    }
 }
