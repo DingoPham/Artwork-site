@@ -9,7 +9,7 @@
 
                 <form @submit.prevent="saveImage" class="flex flex-column gap">
                     <label for="img-type" class="f-20 bold">- Not Safe For Work Art -</label>
-                    <input v-model="imgType" id="img-type" disabled hidden></input>
+                    <input v-model="imgType" id="img-type" disabled hidden>
                     
                     <label for="img-url">URL's image: </label>
                     <input v-model="imgNsfwUrl" id="img-url" type="text" placeholder="Type image's URL here">
@@ -145,7 +145,7 @@
                 this.editIndex = null;
             },
             fetchImages(){
-                fetch('https://localhost:7064/NSFW', {
+                fetch('http://localhost:7064/NSFW', {
                     headers: {
                         'Authorization' : `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type' : 'application/json'
@@ -189,7 +189,7 @@
                 };
 
                 if (this.editMode){
-                    fetch(`https://localhost:7064/NSFW/put/${this.images[this.editIndex].id}`,{ 
+                    fetch(`http://localhost:7064/NSFW/put/${this.images[this.editIndex].id}`,{ 
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -204,7 +204,7 @@
                     });
                 }
                 else{
-                    fetch('https://localhost:7064/NSFW/post',{
+                    fetch('http://localhost:7064/NSFW/post',{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -247,7 +247,7 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                fetch('https://localhost:7064/NSFW/del/', {
+                fetch('http://localhost:7064/NSFW/del/', {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })

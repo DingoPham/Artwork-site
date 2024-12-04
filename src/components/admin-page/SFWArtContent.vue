@@ -9,7 +9,7 @@
 
                 <form @submit.prevent="saveImage" class="flex flex-column gap">
                     <label for="img-type" class="f-20 bold">- Safe For Work Art -</label>
-                    <input v-model="imgType" id="img-type" disabled hidden></input>
+                    <input v-model="imgType" id="img-type" disabled hidden>
                     
                     <label for="img-url">URL's image: </label>
                     <input v-model="imgUrl" id="img-url" type="text" placeholder="Type image's URL here">
@@ -140,7 +140,7 @@
             },
 
             fetchImages(){
-                fetch('https://localhost:7064/SFW')
+                fetch('http://localhost:7064/SFW')
                 .then(response => response.json())
                 .then(data => {
                     this.images = [...data.list_data_sfwart]
@@ -168,7 +168,7 @@
                 };
 
                 if (this.editMode){
-                    fetch(`https://localhost:7064/SFW/put/${this.images[this.editIndex].id}`,{
+                    fetch(`http://localhost:7064/SFW/put/${this.images[this.editIndex].id}`,{
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -183,7 +183,7 @@
                     });
                 }
                 else{
-                    fetch('https://localhost:7064/SFW/post',{
+                    fetch('http://localhost:7064/SFW/post',{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -226,7 +226,7 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                fetch('https://localhost:7064/SFW/del/', {
+                fetch('http://localhost:7064/SFW/del/', {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })
