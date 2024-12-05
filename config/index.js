@@ -11,6 +11,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {},
+    historyApiFallback: true,
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
