@@ -1,11 +1,14 @@
 <template>
   <div id="app">
     <router-view/>
+    <FunctionsContainer />
   </div>
 </template>
 
 <script>
+import FunctionsContainer from './components/other-functions/FunctionsContainer.vue'
 export default {
+  components: { FunctionsContainer },
   name: 'App'
 }
 </script>
@@ -26,4 +29,6 @@ export default {
 <style src="@/assets/Style/body.css">
 </style>
 <style src="@/assets/Style/foot.css">
+</style>
+<style src="@/assets/Style/function.css">
 </style>

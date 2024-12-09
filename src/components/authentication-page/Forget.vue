@@ -51,7 +51,7 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
                         return;
                     }
 
-                    const response = await fetch('http://localhost:7064/Authentication/forget-password', {
+                    const response = await fetch('http://dingo.bigcat.id.vn/Authentication/forget-password', {
                         method: 'POST',
                         headers:{
                             'Content-Type': 'application/json'

@@ -186,6 +186,21 @@
 body{
     outline: none;
     margin: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+body.light{
+    background-color: #fff;
+    color: #000;
+}
+body.dark{
+    background-color: #282828;
+    color: #fff;
+}
+body.no-scroll{
+    overflow: hidden;
+}
+.c-black{
+    color: #000;
 }
 /*-----------------------------------*/
 @media (max-width: 768px) {
