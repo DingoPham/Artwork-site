@@ -130,7 +130,7 @@
                 this.editIndex = null;
             },
             fetchVideos(){
-                fetch('http://dingo.bigcat.id.vn/Video', {
+                fetch('https://dingo.bigcat.id.vn/Video', {
                     headers: {
                         'Authorization' : `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type' : 'application/json'
@@ -174,7 +174,7 @@
                 };
 
                 if (this.editMode){
-                    fetch(`http://dingo.bigcat.id.vn/Video/put/${this.videos[this.editIndex].id}`,{ 
+                    fetch(`https://dingo.bigcat.id.vn/Video/put/${this.videos[this.editIndex].id}`,{ 
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: videoData})
@@ -189,7 +189,7 @@
                     });
                 }
                 else{
-                    fetch('http://dingo.bigcat.id.vn/Video/post',{
+                    fetch('https://dingo.bigcat.id.vn/Video/post',{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: videoData})
@@ -232,7 +232,7 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                fetch('http://dingo.bigcat.id.vn/Video/del/', {
+                fetch('https://dingo.bigcat.id.vn/Video/del/', {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })

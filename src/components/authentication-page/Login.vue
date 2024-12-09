@@ -65,7 +65,7 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
                         return;
                     }
 
-                    const response = await fetch('http://dingo.bigcat.id.vn/Authentication/login', {
+                    const response = await fetch('https://dingo.bigcat.id.vn/Authentication/login', {
                         method: 'POST',
                         headers:{
                             'Content-Type': 'application/json'
