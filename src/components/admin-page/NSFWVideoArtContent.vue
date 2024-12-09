@@ -12,13 +12,13 @@
                     <input v-model="videoType" id="video-type" disabled hidden>
                     
                     <label for="video-url">URL's video: </label>
-                    <input v-model="videoUrl" id="video-url" type="text" placeholder="Type video's URL here">
+                    <input v-model="nsfwVideoUrl" id="video-url" type="text" placeholder="Type video's URL here">
 
                     <label for="video-name">Video name: </label>
-                    <input v-model="videoName" id="video-name" type="text" placeholder="Type video's name here">
+                    <input v-model="nsfwVideoName" id="video-name" type="text" placeholder="Type video's name here">
 
                     <label for="video-des">Video describe: </label>
-                    <input v-model="videoDescribe" id="video-des" type="text" placeholder="Type video's describe here">
+                    <input v-model="nasfwVideoDescribe" id="video-des" type="text" placeholder="Type video's describe here">
 
                     <div class="flex flex-column gap-10 items-end  ">
                         <button type="submit" class="button-f">{{ editMode ? 'Update' : 'Insert' }}</button>
@@ -34,8 +34,8 @@
                     <button v-if="userRole === 'admin'" @click="updateVideo(index)" class="button-f">Update</button>
                     <button v-if="userRole === 'admin'" @click="deleteVideo(video.id)" class="button-f">Delete</button>
                 </div>
-                <video :src="video.videoUrl" controls class="img"></video>
-                <p>{{ video.videoName }}</p>
+                <video :src="video.nsfwVideoUrl" controls class="img"></video>
+                <p>{{ video.nsfwVideoName }}</p>
                 <p>{{ video.describe }}</p>
             </div>
         </div>
@@ -59,9 +59,9 @@
                 showPopup: false,
                 editMode: false,
                 videoType: 'nsfw-video', // type
-                videoUrl: '',
-                videoName: '',
-                videoDescribe: '',
+                nsfwVideoUrl: '',
+                nsfwVideoName: '',
+                nasfwVideoDescribe: '',
                 editIndex: null,
                 videos: [],
                 userRole: '', // track role
@@ -122,9 +122,9 @@
             },
             closePopup(){
                 this.showPopup = false;
-                this.videoUrl = '';
-                this.videoName = '';
-                this.videoDescribe = '';
+                this.nsfwVideoUrl = '';
+                this.nsfwVideoName = '';
+                this.nasfwVideoDescribe = '';
                 this.videoType = 'nsfw-video'; // close popup with this type
                 this.editMode = false;
                 this.editIndex = null;
@@ -159,9 +159,9 @@
             },
             saveVideo(){
                 const videoData = {
-                    videoUrl: this.videoUrl,
-                    videoName: this.videoName,
-                    describe: this.videoDescribe
+                    nsfwVideoUrl: this.nsfwVideoUrl,
+                    nsfwVideoName: this.nsfwVideoName,
+                    nasfwVideoDescribe: this.nasfwVideoDescribe
                 };
 
                 console.log("Data test:", videoData);
@@ -219,9 +219,9 @@
                 this.showPopup = true;
                 this.editIndex = index;
                 this.videoType = this.videos[index].videoType || 'nsfw-video'; //add type for pre-fill
-                this.videoUrl = this.videos[index].videoUrl;
-                this.videoName = this.videos[index].videoName;
-                this.videoDescribe = this.videos[index].describe;
+                this.nsfwVideoUrl = this.videos[index].nsfwVideoUrl;
+                this.nsfwVideoName = this.videos[index].nsfwVideoName;
+                this.nasfwVideoDescribe = this.videos[index].nasfwVideoDescribe;
             },
             deleteVideo(id){
                 const type = this.videos.find(video => video.id === id).videoType || 'nsfw-video';
