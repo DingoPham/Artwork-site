@@ -54,6 +54,12 @@ export default{
             popupMessage: '',
         };
     },
+    mounted(){
+        const hash = window.location.hash; // Lấy hash từ URL
+        const urlParams = new URLSearchParams(hash.split('?')[1]); // Tách các tham số trong hash
+        const token = urlParams.get('token'); // Lấy token từ hash
+        console.log("token:", token);
+    },
     methods:{
         visiblePass(){
             this.showPassword = !this.showPassword;
@@ -75,7 +81,8 @@ export default{
                     return;
                 }
 
-                const urlParam = new URLSearchParams(window.location.search);
+                const hash = window.location.hash; // Lấy hash từ URL
+                const urlParam = new URLSearchParams(hash.split('?')[1]);
                 const token = urlParam.get('token');
                 console.log("token from URL: ", token);
 
@@ -86,7 +93,7 @@ export default{
                     return;
                 }
 
-                const response = await fetch(`https://dingo.bigcat.id.vn/#/Authentication/reset-password?token=${token}`, {
+                const response = await fetch(`https://dingo.bigcat.id.vn/Authentication/reset-password?token=${token}`, {
                         method: 'POST',
                         headers:{
                             'Content-Type': 'application/json',
