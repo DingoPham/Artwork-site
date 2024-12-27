@@ -18,7 +18,7 @@
                     <input v-model="nsfwVideoName" id="video-name" type="text" placeholder="Type video's name here">
 
                     <label for="video-des">Video describe: </label>
-                    <input v-model="nasfwVideoDescribe" id="video-des" type="text" placeholder="Type video's describe here">
+                    <input v-model="nsfwVideoDescribe" id="video-des" type="text" placeholder="Type video's describe here">
 
                     <div class="flex flex-column gap-10 items-end  ">
                         <button type="submit" class="button-f">{{ editMode ? 'Update' : 'Insert' }}</button>
@@ -58,10 +58,10 @@
             return{
                 showPopup: false,
                 editMode: false,
-                videoType: 'nsfw-video', // type
+                videoType: 'nsfwvideo', // type
                 nsfwVideoUrl: '',
                 nsfwVideoName: '',
-                nasfwVideoDescribe: '',
+                nsfwVideoDescribe: '',
                 editIndex: null,
                 videos: [],
                 userRole: '', // track role
@@ -124,8 +124,8 @@
                 this.showPopup = false;
                 this.nsfwVideoUrl = '';
                 this.nsfwVideoName = '';
-                this.nasfwVideoDescribe = '';
-                this.videoType = 'nsfw-video'; // close popup with this type
+                this.nsfwVideoDescribe = '';
+                this.videoType = 'nsfwvideo'; // close popup with this type
                 this.editMode = false;
                 this.editIndex = null;
             },
@@ -161,7 +161,7 @@
                 const videoData = {
                     nsfwVideoUrl: this.nsfwVideoUrl,
                     nsfwVideoName: this.nsfwVideoName,
-                    nasfwVideoDescribe: this.nasfwVideoDescribe
+                    nsfwVideoDescribe: this.nsfwVideoDescribe
                 };
 
                 console.log("Data test:", videoData);
@@ -218,13 +218,13 @@
                 this.editMode = true;
                 this.showPopup = true;
                 this.editIndex = index;
-                this.videoType = this.videos[index].videoType || 'nsfw-video'; //add type for pre-fill
+                this.videoType = this.videos[index].videoType || 'nsfwvideo'; //add type for pre-fill
                 this.nsfwVideoUrl = this.videos[index].nsfwVideoUrl;
                 this.nsfwVideoName = this.videos[index].nsfwVideoName;
-                this.nasfwVideoDescribe = this.videos[index].nasfwVideoDescribe;
+                this.nsfwVideoDescribe = this.videos[index].nsfwVideoDescribe;
             },
             deleteVideo(id){
-                const type = this.videos.find(video => video.id === id).videoType || 'nsfw-video';
+                const type = this.videos.find(video => video.id === id).videoType || 'nsfwvideo';
                 const token = localStorage.getItem('token');
 
                 const headers = {
