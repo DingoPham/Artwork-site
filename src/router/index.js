@@ -14,7 +14,7 @@ Vue.use(Router)
 
 export const EventBus = new Vue();
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '/',
