@@ -186,17 +186,19 @@
 body{
     outline: none;
     margin: 0;
+}
+.bodyGroup{
     transition: background-color 0.3s ease, color 0.3s ease;
 }
-body.light{
+.bodyGroup.light{
     background-color: #fff;
     color: #000;
 }
-body.dark{
+.bodyGroup.dark{
     background-color: #282828;
     color: #fff;
 }
-body.no-scroll{
+.bodyGroup.no-scroll{
     overflow: hidden;
 }
 .c-black{
