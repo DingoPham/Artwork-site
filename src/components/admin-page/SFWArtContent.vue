@@ -140,7 +140,7 @@
             },
 
             fetchImages(){
-                fetch('http://localhost:7064/SFW')
+                fetch('https://dingo.bigcat.id.vn/SFW')
                 .then(response => response.json())
                 .then(data => {
                     this.images = [...data.list_data_sfwart]
@@ -168,7 +168,7 @@
                 };
 
                 if (this.editMode){
-                    fetch(`http://localhost:7064/SFW/put/${this.images[this.editIndex].id}`,{
+                    fetch(`https://dingo.bigcat.id.vn/SFW/put/${this.images[this.editIndex].id}`,{
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -183,7 +183,7 @@
                     });
                 }
                 else{
-                    fetch('http://localhost:7064/SFW/post',{
+                    fetch('https://dingo.bigcat.id.vn/SFW/post',{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -226,7 +226,7 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                fetch('http://localhost:7064/SFW/del/', {
+                fetch('https://dingo.bigcat.id.vn/SFW/del/', {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })

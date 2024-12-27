@@ -130,7 +130,7 @@
                 this.editIndex = null;
             },
             fetchVideos(){
-                fetch('http://localhost:7064/NSFWVideo', {
+                fetch('https://dingo.bigcat.id.vn/NSFWVideo', {
                     headers: {
                         'Authorization' : `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type' : 'application/json'
@@ -174,7 +174,7 @@
                 };
 
                 if (this.editMode){
-                    fetch(`http://localhost:7064/NSFWVideo/put/${this.videos[this.editIndex].id}`,{ 
+                    fetch(`https://dingo.bigcat.id.vn/NSFWVideo/put/${this.videos[this.editIndex].id}`,{ 
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: videoData})
@@ -189,7 +189,7 @@
                     });
                 }
                 else{
-                    fetch('http://localhost:7064/NSFWVideo/post',{
+                    fetch('https://dingo.bigcat.id.vn/NSFWVideo/post',{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: videoData})
@@ -232,7 +232,7 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                fetch('http://localhost:7064/NSFWVideo/del/', {
+                fetch('https://dingo.bigcat.id.vn/NSFWVideo/del/', {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })

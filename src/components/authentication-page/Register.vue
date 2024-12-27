@@ -74,7 +74,7 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
                         this.showPopupNotify = true;
                         return;
                     }
-                    const response = await fetch('http://localhost:7064/Authentication/register', {
+                    const response = await fetch('https://dingo.bigcat.id.vn/Authentication/register', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
