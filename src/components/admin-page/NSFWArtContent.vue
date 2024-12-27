@@ -145,7 +145,7 @@
                 this.editIndex = null;
             },
             fetchImages(){
-                fetch('https://dingo.bigcat.id.vn/NSFW', {
+                fetch('http://localhost:7064/NSFW', {
                     headers: {
                         'Authorization' : `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type' : 'application/json'
@@ -189,7 +189,7 @@
                 };
 
                 if (this.editMode){
-                    fetch(`https://dingo.bigcat.id.vn/NSFW/put/${this.images[this.editIndex].id}`,{ 
+                    fetch(`http://localhost:7064/NSFW/put/${this.images[this.editIndex].id}`,{ 
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -204,7 +204,7 @@
                     });
                 }
                 else{
-                    fetch('https://dingo.bigcat.id.vn/NSFW/post',{
+                    fetch('http://localhost:7064/NSFW/post',{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -247,7 +247,7 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                fetch('https://dingo.bigcat.id.vn/NSFW/del/', {
+                fetch('http://localhost:7064/NSFW/del/', {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })

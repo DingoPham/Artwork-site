@@ -1,14 +1,11 @@
 <template>
   <div id="app">
     <router-view/>
-    <FunctionsContainer />
   </div>
 </template>
 
 <script>
-import FunctionsContainer from './components/other-functions/FunctionsContainer.vue'
 export default {
-  components: { FunctionsContainer },
   name: 'App'
 }
 </script>

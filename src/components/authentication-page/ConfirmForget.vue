@@ -86,7 +86,7 @@ export default{
                     return;
                 }
 
-                const response = await fetch(`https://dingo.bigcat.id.vn/Authentication/reset-password?token=${token}`, {
+                const response = await fetch(`http://localhost:7064/Authentication/reset-password?token=${token}`, {
                         method: 'POST',
                         headers:{
                             'Content-Type': 'application/json',
