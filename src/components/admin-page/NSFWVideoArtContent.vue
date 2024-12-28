@@ -4,7 +4,7 @@
             <button v-if="userRole === 'admin'" @click="showPopup = true" class="button-f">Insert</button>
         </div>
         <div v-if="showPopup" class="po-fixed po-fixed-mod bg-c-popup flex justify-center items-center">
-            <div class="bg-c-white p-1 border-radius-5 h-500 w-800">
+            <div class="bg-c-white c-black p-1 border-radius-5 h-500 w-800">
                 <h1>{{ editMode ? 'Update video' : 'Insert video' }}</h1>
 
                 <form @submit.prevent="saveVideo" class="flex flex-column gap">
