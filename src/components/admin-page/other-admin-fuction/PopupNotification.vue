@@ -107,7 +107,7 @@ export default{
         }
     }
 /* -------------------------------------- */
-@media (max-width: 768px) {
+    @media (max-width: 768px) {
         .box-white h1{
             font-size: 25px;
             font-weight: 300;
