@@ -186,19 +186,17 @@
 body{
     outline: none;
     margin: 0;
-}
-.bodyGroup{
     transition: background-color 0.3s ease, color 0.3s ease;
 }
-.bodyGroup.light{
+body.light{
     background-color: #fff;
     color: #000;
 }
-.bodyGroup.dark{
+body.dark{
     background-color: #282828;
     color: #fff;
 }
-.bodyGroup.no-scroll{
+body.no-scroll{
     overflow: hidden;
 }
 .c-black{
@@ -206,12 +204,6 @@ body{
 }
 /*-----------------------------------*/
 @media (max-width: 768px) {
-    .m-3-2{
-        margin: 10px;
-    }
-    .p-3-2{
-        padding: 10px;
-    }
     .flex-reverse-2{
         flex-direction: row-reverse;
     }
