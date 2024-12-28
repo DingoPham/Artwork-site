@@ -20,7 +20,7 @@
                     <label for="video-des">Video describe: </label>
                     <input v-model="videoDescribe" id="video-des" type="text" placeholder="Type video's describe here">
 
-                    <div class="flex flex-column gap-10 items-end  ">
+                    <div class="flex flex-column gap-10 items-end">
                         <button type="submit" class="button-f">{{ editMode ? 'Update' : 'Insert' }}</button>
                         <button type="button" class="button-f" @click="closePopup">Cancle</button>
                     </div>
@@ -28,7 +28,7 @@
             </div>
         </div>
 
-        <div class="flex m-t-20 over-hidden gap-18 flex-wrap">
+        <div class="flex m-t-20 over-hidden gap-18 flex-wrap justify-center-2">
             <div v-for="(video, index) in paginatedVideos" :key="video.id" class="m-t-20 gap-5 img-slice"> 
                 <div class="flex gap-10 m-b">
                     <button v-if="userRole === 'admin'" @click="updateVideo(index)" class="button-f">Update</button>

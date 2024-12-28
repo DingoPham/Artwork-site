@@ -39,10 +39,9 @@ video:fullscreen {
 }
 .bg-w{
     background-color: #ffffff;
-    width: 400px;
-    height: 550px;
+    width: 350px;
+    height: 520px;
     border-radius: 4px;
-    box-shadow: 6px 10px 10px #000;
 }
 .bg-w .tx-center{
     font-size: 40px;
@@ -120,6 +119,7 @@ video:fullscreen {
 }
 .ui-1 h1{
     margin: 0 0 10px 0;
+    overflow-wrap: anywhere;
 }
 .ui-1 h2{
     margin: 5px 0;
@@ -167,11 +167,14 @@ div hr{
 .flex .div img{
     height: 95vh;
 }
+.body-page{
+    color: #000;
+}
 /*-----------------------------------*/
 @media (max-width: 768px) {
     .img-slice img{
-        width: 15vh;
-        height: 15vh;
+        width: 40vh;
+        height: 40vh;
     }
     .img-slice img:hover {
         transform: none;
@@ -187,5 +190,8 @@ div hr{
     .img-slice video{
         width: 40vh;
         height: 40vh;
+    }
+    .bg-w h2{
+        margin: 10px 0px 15px 0px;
     }
 }

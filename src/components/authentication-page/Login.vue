@@ -1,5 +1,5 @@
 <template>
-    <div class="authen-bg-main flex justify-center items-center">
+    <div class="authen-bg-main flex justify-center items-center body-page">
         <PopupNotification  v-if="showPopupNotify" 
                             :loginMessage="popupMessage"
                             @hide="onPopupHide"/>
@@ -30,6 +30,9 @@
                     </label>
                     <label for="/">
                         <router-link to="/forget-password">Forgot account?</router-link>
+                    </label>
+                    <label for="/" style="text-align: center; margin-top: 20px;">
+                        <router-link to="/"> <span>&#8249;</span> Head back to Artwork Site</router-link>
                     </label>
                 </form> 
             </div>

@@ -106,4 +106,11 @@ export default{
             background-color: #2b2b2bc0;
         }
     }
+/* -------------------------------------- */
+@media (max-width: 768px) {
+        .box-white h1{
+            font-size: 25px;
+            font-weight: 300;
+        }
+    }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="authen-bg-main flex justify-center items-center">
+    <div class="authen-bg-main flex justify-center items-center body-page">
         <PopupNotification  v-if="showPopupNotify" 
                             :forgetMessage="popupMessage"
                             @hide="onPopupHide"/>

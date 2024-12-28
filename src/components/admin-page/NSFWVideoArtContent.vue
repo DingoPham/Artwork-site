@@ -28,7 +28,7 @@
             </div>
         </div>
 
-        <div class="flex m-t-20 over-hidden gap-18 flex-wrap">
+        <div class="flex m-t-20 over-hidden gap-18 flex-wrap justify-center-2">
             <div v-for="(video, index) in paginatedVideos" :key="video.id" class="m-t-20 gap-5 img-slice"> 
                 <div class="flex gap-10 m-b">
                     <button v-if="userRole === 'admin'" @click="updateVideo(index)" class="button-f">Update</button>
