@@ -10,41 +10,38 @@
 
 <script>
 import Logout from '../../authentication-page/Logout.vue';
+import { jwtDecode } from 'jwt-decode';
     
 export default{
     components:{Logout},
+    data(){
+        return{
+            userName: ''
+        }
+    },
     created(){
-        const{username} = this.getUserData();
-        this.userName= username;
-    },
-    props:{
-        userName:{
-            type: String,
-            required:true,
-            default: ''
-        }
-    },
-    watch:{
-        userName(newValue){
-            console.log("Update name: ", newValue)
-        }
+        this.loadUserData();
     },
     methods:{
         handleLogout(){
-            console.log("Goodbye!")
         },
-        getUserData(){
-            let token = sessionStorage.getItem("token");
-            let username = sessionStorage.getItem("username");
-            let role = sessionStorage.getItem("role");
-
-            // If nothing in sessionStorage, check localStorage
-            if (!token || !username || !role) {
-                token = localStorage.getItem("token");
-                username = localStorage.getItem("username");
-                role = localStorage.getItem("role");
+        loadUserData(){
+            let token = localStorage.getItem("token");
+            if (token) {
+                try {
+                    // Kiểm tra token có đúng 3 phần không
+                    if (token.split('.').length !== 3) {
+                        throw new Error("Invalid token format");
+                    }
+                    const decoded = jwtDecode(token);
+                    this.userName = decoded.username ? decodeURIComponent(escape(atob(decoded.username))) : "Invalid username";
+                } catch (error) {
+                    console.error("Error decoding token:", error);
+                    this.userName = "Invalid username";
+                }
+            } else {
+                this.userName = "Guest";
             }
-            return{token, username, role};
         }
     }
 }

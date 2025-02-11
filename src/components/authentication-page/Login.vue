@@ -85,12 +85,9 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
                     }
 
                     const result = await response.json();
-                    console.log("API response: ", result);
 
                     if (result.loginMessage === 'Login Successful!'){
                         localStorage.setItem('token', result.token);
-                        localStorage.setItem('username', result.username);
-                        localStorage.setItem('role', result.role);
                         this.popupMessage = 'Login Successful!';
                     }
                     else{
@@ -114,7 +111,3 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
         }
     };
 </script>
-
-<style scoped>
-
-</style>
