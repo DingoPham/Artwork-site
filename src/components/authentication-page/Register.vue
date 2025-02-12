@@ -74,7 +74,7 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
                         this.showPopupNotify = true;
                         return;
                     }
-                    const response = await fetch('http://artwork-core-for-render-build.onrender.com/Authentication/register', {
+                    const response = await fetch('https://artwork-core-for-render-build.onrender.com/Authentication/register', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

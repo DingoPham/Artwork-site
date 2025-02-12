@@ -51,7 +51,7 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
                         return;
                     }
 
-                    const response = await fetch('http://artwork-core-for-render-build.onrender.com/Authentication/forget-password', {
+                    const response = await fetch('https://artwork-core-for-render-build.onrender.com/Authentication/forget-password', {
                         method: 'POST',
                         headers:{
                             'Content-Type': 'application/json'

@@ -130,7 +130,7 @@
                 this.editIndex = null;
             },
             fetchVideos(){
-                fetch('http://artwork-core-for-render-build.onrender.com/Video', {
+                fetch('https://artwork-core-for-render-build.onrender.com/Video', {
                     headers: {
                         'Authorization' : `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type' : 'application/json'
@@ -174,7 +174,7 @@
                 };
 
                 if (this.editMode){
-                    fetch(`http://artwork-core-for-render-build.onrender.com/Video/put/${this.videos[this.editIndex].id}`,{ 
+                    fetch(`https://artwork-core-for-render-build.onrender.com/Video/put/${this.videos[this.editIndex].id}`,{ 
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: videoData})
@@ -189,7 +189,7 @@
                     });
                 }
                 else{
-                    fetch('http://artwork-core-for-render-build.onrender.com/Video/post',{
+                    fetch('https://artwork-core-for-render-build.onrender.com/Video/post',{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: videoData})
@@ -232,7 +232,7 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                fetch('http://artwork-core-for-render-build.onrender.com/Video/del/', {
+                fetch('https://artwork-core-for-render-build.onrender.com/Video/del/', {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })

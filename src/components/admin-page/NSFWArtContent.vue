@@ -145,7 +145,7 @@
                 this.editIndex = null;
             },
             fetchImages(){
-                fetch('http://artwork-core-for-render-build.onrender.com/NSFW', {
+                fetch('https://artwork-core-for-render-build.onrender.com/NSFW', {
                     headers: {
                         'Authorization' : `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type' : 'application/json'
@@ -189,7 +189,7 @@
                 };
 
                 if (this.editMode){
-                    fetch(`http://artwork-core-for-render-build.onrender.com/NSFW/put/${this.images[this.editIndex].id}`,{ 
+                    fetch(`https://artwork-core-for-render-build.onrender.com/NSFW/put/${this.images[this.editIndex].id}`,{ 
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -204,7 +204,7 @@
                     });
                 }
                 else{
-                    fetch('http://artwork-core-for-render-build.onrender.com/NSFW/post',{
+                    fetch('https://artwork-core-for-render-build.onrender.com/NSFW/post',{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -247,7 +247,7 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                fetch('http://artwork-core-for-render-build.onrender.com/NSFW/del/', {
+                fetch('https://artwork-core-for-render-build.onrender.com/NSFW/del/', {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })
