@@ -88,6 +88,8 @@ import PopupNotification from '../admin-page/other-admin-fuction/PopupNotificati
 
                     if (result.loginMessage === 'Login Successful!'){
                         localStorage.setItem('token', result.token);
+                        localStorage.setItem('username', result.username);
+                        localStorage.setItem('role', result.role);
                         this.popupMessage = 'Login Successful!';
                     }
                     else{
