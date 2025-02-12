@@ -140,7 +140,7 @@
             },
 
             fetchImages(){
-                fetch('https://dingo.bigcat.id.vn/SFW')
+                fetch('http://artwork-core-for-render-build.onrender.com/SFW')
                 .then(response => response.json())
                 .then(data => {
                     this.images = [...data.list_data_sfwart]
@@ -168,7 +168,7 @@
                 };
 
                 if (this.editMode){
-                    fetch(`https://dingo.bigcat.id.vn/SFW/put/${this.images[this.editIndex].id}`,{
+                    fetch(`http://artwork-core-for-render-build.onrender.com/SFW/put/${this.images[this.editIndex].id}`,{
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -183,7 +183,7 @@
                     });
                 }
                 else{
-                    fetch('https://dingo.bigcat.id.vn/SFW/post',{
+                    fetch('http://artwork-core-for-render-build.onrender.com/SFW/post',{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: imgData})
@@ -226,7 +226,7 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                fetch('https://dingo.bigcat.id.vn/SFW/del/', {
+                fetch('http://artwork-core-for-render-build.onrender.com/SFW/del/', {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })

@@ -130,7 +130,7 @@
                 this.editIndex = null;
             },
             fetchVideos(){
-                fetch('https://dingo.bigcat.id.vn/NSFWVideo', {
+                fetch('http://artwork-core-for-render-build.onrender.com/NSFWVideo', {
                     headers: {
                         'Authorization' : `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type' : 'application/json'
@@ -174,7 +174,7 @@
                 };
 
                 if (this.editMode){
-                    fetch(`https://dingo.bigcat.id.vn/NSFWVideo/put/${this.videos[this.editIndex].id}`,{ 
+                    fetch(`http://artwork-core-for-render-build.onrender.com/NSFWVideo/put/${this.videos[this.editIndex].id}`,{ 
                         method: 'PUT',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: videoData})
@@ -189,7 +189,7 @@
                     });
                 }
                 else{
-                    fetch('https://dingo.bigcat.id.vn/NSFWVideo/post',{
+                    fetch('http://artwork-core-for-render-build.onrender.com/NSFWVideo/post',{
                         method: 'POST',
                         headers: headers,
                         body: JSON.stringify({Type: type, Data: videoData})
@@ -232,7 +232,7 @@
                     'Authorization': `Bearer ${token}` // add token to header
                 };
 
-                fetch('https://dingo.bigcat.id.vn/NSFWVideo/del/', {
+                fetch('http://artwork-core-for-render-build.onrender.com/NSFWVideo/del/', {
                     method: 'DELETE',
                     headers: headers,
                     body: JSON.stringify({ Type: type, Data: {id} })
