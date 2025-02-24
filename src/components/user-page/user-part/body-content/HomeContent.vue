@@ -1,5 +1,6 @@
 <template>
     <div class="p-3 m-3 p-3-2 m-3-2">
+      <Loader v-if="isLoading" />
       <AccountEmpty v-if="userRole === 'guest'"/>
       <AccountDetected v-if="userRole !== 'guest'" :userName="userName"/>
       <div>
@@ -12,25 +13,29 @@
 import SFWArtContent from '../../../admin-page/SFWArtContent.vue';
 import AccountDetected from '../../../admin-page/other-admin-fuction/AccountDetected.vue';
 import AccountEmpty from '../../../admin-page/other-admin-fuction/AccountEmpty.vue';
+import Loader from '../../../other-functions/Loader.vue';
   export default{
     components:{
-      SFWArtContent, AccountEmpty, AccountDetected
+      SFWArtContent, AccountEmpty, AccountDetected, Loader
     },
     data(){
       return{
         userRole: 'guest', //default value for guest
-        userName: ''
+        userName: '',
+        isLoading: true,
       };
     },
     created(){
       this.checkUserRole()
     },
     methods:{
-      checkUserRole(){
+      async checkUserRole(){
+        this.isLoading = true
         const token = localStorage.getItem('token');
 
         if(!token){
           this.userRole = 'guest'; // default role for unknow guest if can't find token
+          this.isLoading = false;
           return;
         }
 
@@ -38,6 +43,7 @@ import AccountEmpty from '../../../admin-page/other-admin-fuction/AccountEmpty.v
         const tokenParts = token.split('.');
         if(tokenParts.length !== 3){
           this.userRole = 'guest';
+          this.isLoading = false;
           return;
         }
 
@@ -51,6 +57,9 @@ import AccountEmpty from '../../../admin-page/other-admin-fuction/AccountEmpty.v
         catch (error){
           console.error('Error decoding token: ', error);
           this.userRole = 'guest';
+        }
+        finally{
+          this.isLoading = false
         }
       }
     }
