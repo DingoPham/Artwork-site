@@ -134,7 +134,7 @@ import Loader from "../other-functions/Loader.vue";
                 this.editMode = false;
                 this.editIndex = null;
             },
-            async etchVideos(){
+            async fetchVideos(){
                 this.isLoading = true;
                 try{
                     const response = await fetch('https://artwork-core-for-render-build.onrender.com/NSFWVideo', {
