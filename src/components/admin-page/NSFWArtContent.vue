@@ -1,69 +1,73 @@
 <template>
     <div class="m-t-20">
-        <div class="flex justify-center">
-            <button v-if="userRole === 'admin'" @click="showPopup = true" class="button-f">Insert</button>
-        </div>
-        <div v-if="showPopup" class="po-fixed po-fixed-mod bg-c-popup flex justify-center items-center">
-            <div class="bg-c-white c-black p-1 border-radius-5 h-500 w-800">
-                <h1>{{ editMode ? 'Update image' : 'Insert image' }}</h1>
+        <Loader v-if="isLoading" />
+        <div v-else>
+            <div class="flex justify-center">
+                <button v-if="userRole === 'admin'" @click="showPopup = true" class="button-f">Insert</button>
+            </div>
+            <div v-if="showPopup" class="po-fixed po-fixed-mod bg-c-popup flex justify-center items-center">
+                <div class="bg-c-white c-black p-1 border-radius-5 h-500 w-800">
+                    <h1>{{ editMode ? 'Update image' : 'Insert image' }}</h1>
 
-                <form @submit.prevent="saveImage" class="flex flex-column gap">
-                    <label for="img-type" class="f-20 bold">- Not Safe For Work Art -</label>
-                    <input v-model="imgType" id="img-type" disabled hidden>
-                    
-                    <label for="img-url">URL's image: </label>
-                    <input v-model="imgNsfwUrl" id="img-url" type="text" placeholder="Type image's URL here">
+                    <form @submit.prevent="saveImage" class="flex flex-column gap">
+                        <label for="img-type" class="f-20 bold">- Not Safe For Work Art -</label>
+                        <input v-model="imgType" id="img-type" disabled hidden>
+                        
+                        <label for="img-url">URL's image: </label>
+                        <input v-model="imgNsfwUrl" id="img-url" type="text" placeholder="Type image's URL here">
 
-                    <label for="img-name">Image name: </label>
-                    <input v-model="imgNsfwName" id="img-name" type="text" placeholder="Type image's name here">
+                        <label for="img-name">Image name: </label>
+                        <input v-model="imgNsfwName" id="img-name" type="text" placeholder="Type image's name here">
 
-                    <label for="img-des">Image describe: </label>
-                    <input v-model="imgNsfwDescribe" id="img-des" type="text" placeholder="Type image's describe here">
+                        <label for="img-des">Image describe: </label>
+                        <input v-model="imgNsfwDescribe" id="img-des" type="text" placeholder="Type image's describe here">
 
-                    <div class="flex flex-column gap-10 items-end">
-                        <button type="submit" class="button-f">{{ editMode ? 'Update' : 'Insert' }}</button>
-                        <button type="button" class="button-f" @click="closePopup">Cancle</button>
+                        <div class="flex flex-column gap-10 items-end">
+                            <button type="submit" class="button-f">{{ editMode ? 'Update' : 'Insert' }}</button>
+                            <button type="button" class="button-f" @click="closePopup">Cancle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="flex m-t-20 over-hidden gap-18 flex-wrap justify-center-2">
+                <div v-for="(image, index) in paginatedImages" :key="image.id" class="m-t-20 gap-5 img-slice"> 
+                    <div class="flex gap-10 m-b">
+                        <button v-if="userRole === 'admin'" @click="updateImage(index)" class="button-f">Update</button>
+                        <button v-if="userRole === 'admin'" @click="deleteImage(image.id)" class="button-f">Delete</button>
                     </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="flex m-t-20 over-hidden gap-18 flex-wrap justify-center-2">
-            <div v-for="(image, index) in paginatedImages" :key="image.id" class="m-t-20 gap-5 img-slice"> 
-                <div class="flex gap-10 m-b">
-                    <button v-if="userRole === 'admin'" @click="updateImage(index)" class="button-f">Update</button>
-                    <button v-if="userRole === 'admin'" @click="deleteImage(image.id)" class="button-f">Delete</button>
-                </div>
-                <img :src="image.imgNsfwUrl" alt="" @click="showFullImage(image)" class="img"/>
-                <p>{{ image.imgNsfwName }}</p>
-                <p>{{ image.describe }}</p>
-            </div>
-        </div>
-        
-
-        <div v-if="showImagePopup" class="po-fixed po-fixed-mod bg-c-popup flex justify-center items-center">
-            <div class="div">
-                <img :src="curruntImage.imgNsfwUrl" alt="">
-                <div @click="showImagePopup = false">
-                    <i style="font-size:24px" class="fa">&#xf00d;</i>
+                    <img :src="image.imgNsfwUrl" alt="" @click="showFullImage(image)" class="img"/>
+                    <p>{{ image.imgNsfwName }}</p>
+                    <p>{{ image.describe }}</p>
                 </div>
             </div>
+            
+
+            <div v-if="showImagePopup" class="po-fixed po-fixed-mod bg-c-popup flex justify-center items-center">
+                <div class="div">
+                    <img :src="curruntImage.imgNsfwUrl" alt="">
+                    <div @click="showImagePopup = false">
+                        <i style="font-size:24px" class="fa">&#xf00d;</i>
+                    </div>
+                </div>
+            </div>
+            
+            <PageChanger
+                v-if="images.length > 0"
+                :totalPages = "totalPages"
+                :curruntPage = "curruntPage"
+                @page-change="changePage"
+            />
         </div>
-        
-        <PageChanger
-            v-if="images.length > 0"
-            :totalPages = "totalPages"
-            :curruntPage = "curruntPage"
-            @page-change="changePage"
-        />
     </div>
 </template>
 
 <script>
     import PageChanger from "../admin-page/other-admin-fuction/PageChanger.vue"
+    import Loader from "../other-functions/Loader.vue";
 
     export default{
-        components:{PageChanger},
+        components:{PageChanger, Loader},
         data(){
             return{
                 showPopup: false,
@@ -79,6 +83,7 @@
                 itemsPerPage: 6,
                 showImagePopup: false,
                 curruntImage: null,
+                isLoading: false,
             };
         },
         computed:{
@@ -144,14 +149,15 @@
                 this.editMode = false;
                 this.editIndex = null;
             },
-            fetchImages(){
-                fetch('https://artwork-core-for-render-build.onrender.com/NSFW', {
-                    headers: {
-                        'Authorization' : `Bearer ${localStorage.getItem('token')}`,
-                        'Content-Type' : 'application/json'
-                    },
-                })
-                .then(response => {
+            async fetchImages(){
+                this.isLoading = true;
+                try{
+                    const response = await fetch('https://artwork-core-for-render-build.onrender.com/NSFW', {
+                        headers: {
+                            'Authorization' : `Bearer ${localStorage.getItem('token')}`,
+                            'Content-Type' : 'application/json'
+                        }
+                    });
                     if(!response.ok){
                         if(response.status === 400){
                             alert('You must be at least 18 years old to access this content!');
@@ -163,14 +169,15 @@
                         }
                         throw new Error('Failed to fetch images');
                     }
-                    return response.json();
-                })
-                .then(data => {
+                    const data = await response.json();
                     this.images = [...data.list_data_nsfwart]
-                })
-                .catch(error => {
-                console.error('Can not get any images, error:', error);
-                });
+                }
+                catch(error){
+                    console.error('Can not get any images, error:', error);
+                }
+                finally{
+                    this.isLoading = false;
+                }
             },
             saveImage(){
                 const imgData = {

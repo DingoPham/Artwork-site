@@ -1,59 +1,63 @@
 <template>
     <div class="m-t-20">
-        <div class="flex justify-center">
-            <button v-if="userRole === 'admin'" @click="showPopup = true" class="button-f">Insert</button>
-        </div>
-        <div v-if="showPopup" class="po-fixed po-fixed-mod bg-c-popup flex justify-center items-center">
-            <div class="bg-c-white c-black p-1 border-radius-5 h-500 w-800">
-                <h1>{{ editMode ? 'Update video' : 'Insert video' }}</h1>
-
-                <form @submit.prevent="saveVideo" class="flex flex-column gap">
-                    <label for="video-type" class="f-20 bold">- Not safe for work video -</label>
-                    <input v-model="videoType" id="video-type" disabled hidden>
-                    
-                    <label for="video-url">URL's video: </label>
-                    <input v-model="nsfwVideoUrl" id="video-url" type="text" placeholder="Type video's URL here">
-
-                    <label for="video-name">Video name: </label>
-                    <input v-model="nsfwVideoName" id="video-name" type="text" placeholder="Type video's name here">
-
-                    <label for="video-des">Video describe: </label>
-                    <input v-model="nsfwVideoDescribe" id="video-des" type="text" placeholder="Type video's describe here">
-
-                    <div class="flex flex-column gap-10 items-end  ">
-                        <button type="submit" class="button-f">{{ editMode ? 'Update' : 'Insert' }}</button>
-                        <button type="button" class="button-f" @click="closePopup">Cancle</button>
-                    </div>
-                </form>
+        <Loader v-if="isLoading" />
+        <div v-else>
+            <div class="flex justify-center">
+                <button v-if="userRole === 'admin'" @click="showPopup = true" class="button-f">Insert</button>
             </div>
-        </div>
+            <div v-if="showPopup" class="po-fixed po-fixed-mod bg-c-popup flex justify-center items-center">
+                <div class="bg-c-white c-black p-1 border-radius-5 h-500 w-800">
+                    <h1>{{ editMode ? 'Update video' : 'Insert video' }}</h1>
 
-        <div class="flex m-t-20 over-hidden gap-18 flex-wrap justify-center-2">
-            <div v-for="(video, index) in paginatedVideos" :key="video.id" class="m-t-20 gap-5 img-slice"> 
-                <div class="flex gap-10 m-b">
-                    <button v-if="userRole === 'admin'" @click="updateVideo(index)" class="button-f">Update</button>
-                    <button v-if="userRole === 'admin'" @click="deleteVideo(video.id)" class="button-f">Delete</button>
+                    <form @submit.prevent="saveVideo" class="flex flex-column gap">
+                        <label for="video-type" class="f-20 bold">- Not safe for work video -</label>
+                        <input v-model="videoType" id="video-type" disabled hidden>
+                        
+                        <label for="video-url">URL's video: </label>
+                        <input v-model="nsfwVideoUrl" id="video-url" type="text" placeholder="Type video's URL here">
+
+                        <label for="video-name">Video name: </label>
+                        <input v-model="nsfwVideoName" id="video-name" type="text" placeholder="Type video's name here">
+
+                        <label for="video-des">Video describe: </label>
+                        <input v-model="nsfwVideoDescribe" id="video-des" type="text" placeholder="Type video's describe here">
+
+                        <div class="flex flex-column gap-10 items-end  ">
+                            <button type="submit" class="button-f">{{ editMode ? 'Update' : 'Insert' }}</button>
+                            <button type="button" class="button-f" @click="closePopup">Cancle</button>
+                        </div>
+                    </form>
                 </div>
-                <video :src="video.nsfwVideoUrl" controls class="img"></video>
-                <p>{{ video.nsfwVideoName }}</p>
-                <p>{{ video.describe }}</p>
             </div>
+
+            <div class="flex m-t-20 over-hidden gap-18 flex-wrap justify-center-2">
+                <div v-for="(video, index) in paginatedVideos" :key="video.id" class="m-t-20 gap-5 img-slice"> 
+                    <div class="flex gap-10 m-b">
+                        <button v-if="userRole === 'admin'" @click="updateVideo(index)" class="button-f">Update</button>
+                        <button v-if="userRole === 'admin'" @click="deleteVideo(video.id)" class="button-f">Delete</button>
+                    </div>
+                    <video :src="video.nsfwVideoUrl" controls class="img"></video>
+                    <p>{{ video.nsfwVideoName }}</p>
+                    <p>{{ video.describe }}</p>
+                </div>
+            </div>
+            
+            <PageChanger
+                v-if="videos.length > 0"
+                :totalPages = "totalPages"
+                :curruntPage = "curruntPage"
+                @page-change="changePage"
+            />
         </div>
-        
-        <PageChanger
-            v-if="videos.length > 0"
-            :totalPages = "totalPages"
-            :curruntPage = "curruntPage"
-            @page-change="changePage"
-        />
     </div>
 </template>
 
 <script>
     import PageChanger from "../admin-page/other-admin-fuction/PageChanger.vue"
+import Loader from "../other-functions/Loader.vue";
 
     export default{
-        components:{PageChanger},
+        components:{PageChanger, Loader},
         data(){
             return{
                 showPopup: false,
@@ -68,6 +72,7 @@
                 curruntPage: 1,
                 itemsPerPage: 6,
                 curruntVideo: null,
+                isLoading: false,
             };
         },
         computed:{
@@ -129,14 +134,15 @@
                 this.editMode = false;
                 this.editIndex = null;
             },
-            fetchVideos(){
-                fetch('https://artwork-core-for-render-build.onrender.com/NSFWVideo', {
-                    headers: {
-                        'Authorization' : `Bearer ${localStorage.getItem('token')}`,
-                        'Content-Type' : 'application/json'
-                    },
-                })
-                .then(response => {
+            async etchVideos(){
+                this.isLoading = true;
+                try{
+                    const response = await fetch('https://artwork-core-for-render-build.onrender.com/NSFWVideo', {
+                        headers: {
+                            'Authorization' : `Bearer ${localStorage.getItem('token')}`,
+                            'Content-Type' : 'application/json'
+                        },
+                    })
                     if(!response.ok){
                         if(response.status === 400){
                             alert('You must be at least 18 years old to access this content!');
@@ -148,14 +154,15 @@
                         }
                         throw new Error('Failed to fetch videos');
                     }
-                    return response.json();
-                })
-                .then(data => {
+                    const data = await response.json();
                     this.videos = [...data.list_data_nsfwvideo]
-                })
-                .catch(error => {
-                console.error('Can not get any videos, error:', error);
-                });
+                }
+                catch(error){
+                    console.error('Can not get any videos, error:', error);
+                }
+                finally{
+                    this.isLoading = false;
+                }
             },
             saveVideo(){
                 const videoData = {

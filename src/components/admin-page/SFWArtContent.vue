@@ -82,7 +82,7 @@ import Loader from "../other-functions/Loader.vue";
                 itemsPerPage: 6,
                 showImagePopup: false,
                 curruntImage: null,
-                isLoading: true,
+                isLoading: false,
             };
         },
         computed:{
