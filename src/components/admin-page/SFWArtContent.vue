@@ -35,10 +35,10 @@
                 <div class="flex gap-10 m-b">
                     <button v-if="userRole === 'admin'" @click="updateImage(index)" class="button-f">Update</button>
                     <button v-if="userRole === 'admin'" @click="deleteImage(image.id)" class="button-f">Delete</button>
-                    <button v-if="userRole === 'admin'" @click="moveImageLeft(index)" class="button-f">
+                    <button v-if="userRole === 'admin'" @click="moveImageLeft(index)" class="button-f2">
                         <span>&#8592;</span>
                     </button>
-                    <button v-if="userRole === 'admin'" @click="moveImageRight(index)" class="button-f">
+                    <button v-if="userRole === 'admin'" @click="moveImageRight(index)" class="button-f2">
                         <span>&#8594;</span>
                     </button>
                 </div>
@@ -69,7 +69,7 @@
 
 <script>
     import PageChanger from "../admin-page/other-admin-fuction/PageChanger.vue"
-import Loader from "../other-functions/Loader.vue";
+    import Loader from "../other-functions/Loader.vue";
     
     export default{
         components:{PageChanger, Loader},
@@ -252,21 +252,22 @@ import Loader from "../other-functions/Loader.vue";
                     console.error('Error while deleting image: ', error);
                 });
             },
-            moveImageLeft(index) {
-                if (this.userRole !== 'admin') return; // Chỉ admin được phép
+            async moveImageLeft(index) {
+                if (this.userRole !== 'admin') return;
                 const globalIndex = (this.curruntPage - 1) * this.itemsPerPage + index;
-                if (globalIndex > 0) { // Đảm bảo không vượt quá đầu mảng
+                if (globalIndex > 0) {
                     [this.images[globalIndex], this.images[globalIndex - 1]] = 
                     [this.images[globalIndex - 1], this.images[globalIndex]];
+                    await this.saveImageOrder();
                 }
             },
-                // Thêm phương thức di chuyển ảnh sang phải
-                moveImageRight(index) {
-                if (this.userRole !== 'admin') return; // Chỉ admin được phép
+            async moveImageRight(index) {
+                if (this.userRole !== 'admin') return;
                 const globalIndex = (this.curruntPage - 1) * this.itemsPerPage + index;
-                if (globalIndex < this.images.length - 1) { // Đảm bảo không vượt quá cuối mảng
+                if (globalIndex < this.images.length - 1) {
                     [this.images[globalIndex], this.images[globalIndex + 1]] = 
                     [this.images[globalIndex + 1], this.images[globalIndex]];
+                    await this.saveImageOrder();
                 }
             },
             async saveImageOrder() {
@@ -280,16 +281,28 @@ import Loader from "../other-functions/Loader.vue";
                     const response = await fetch('https://artwork-core-for-render-build.onrender.com/SFW/order', {
                     method: 'PUT',
                     headers: headers,
-                    body: JSON.stringify({ images: this.images }) // Gửi toàn bộ mảng images
+                    body: JSON.stringify({ images: this.images })
                     });
                     if (!response.ok) {
-                    const err = await response.json();
-                    throw new Error(err.message || 'Failed to save image order');
+                        const err = await response.json();
+                        throw new Error(err.message || 'Failed to save image order');
                     }
                 } catch (error) {
                     console.error('Error saving image order:', error);
+                }
+                finally {
+                    this.isLoading = false;
                 }
             },
         }
     }
 </script>
+
+<style scoped>
+    .button-f2{
+        cursor: pointer;
+        background-color: #272727;
+        color: #fff;
+        height: 30px;   
+    }
+</style>
