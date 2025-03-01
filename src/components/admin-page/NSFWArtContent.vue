@@ -239,7 +239,6 @@ export default {
       this.imgNsfwDescribe = this.images[this.editIndex].describe;
     },
     deleteImage(id) {
-      this.isLoading = true;
       const type = this.images.find(image => image.id === id).imgType || 'nsfw_art';
       const token = localStorage.getItem('token');
       const headers = {
@@ -256,15 +255,13 @@ export default {
       })
       .catch(error => {
         console.error('Error while deleting image: ', error);
-      })
-      .finally(() => {
-        this.isLoading = false;
       });
     },
     async moveImageLeft(index) {
       if (this.userRole !== 'admin') return;
       if (index > 0) {
         const start = (this.curruntPage - 1) * this.itemsPerPage;
+        const globalIndex = start + index;
         const pageImages = this.paginatedImages.slice();
         [pageImages[index], pageImages[index - 1]] = [pageImages[index - 1], pageImages[index]];
         this.images.splice(start, this.itemsPerPage, ...pageImages);
@@ -275,6 +272,7 @@ export default {
       if (this.userRole !== 'admin') return;
       if (index < this.paginatedImages.length - 1) {
         const start = (this.curruntPage - 1) * this.itemsPerPage;
+        const globalIndex = start + index;
         const pageImages = this.paginatedImages.slice();
         [pageImages[index], pageImages[index + 1]] = [pageImages[index + 1], pageImages[index]];
         this.images.splice(start, this.itemsPerPage, ...pageImages);
@@ -292,7 +290,7 @@ export default {
         const response = await fetch('https://artwork-core-for-render-build.onrender.com/NSFW/order', {
           method: 'PUT',
           headers: headers,
-          body: JSON.stringify({ NsfwImages: this.images }) // Điều chỉnh key theo backend
+          body: JSON.stringify({ images: this.images })
         });
         if (!response.ok) {
           const err = await response.json();
