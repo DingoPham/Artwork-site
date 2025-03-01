@@ -30,8 +30,12 @@
             <div class="flex gap-10 m-b">
               <button v-if="userRole === 'admin'" @click="updateImage(index)" class="button-f">Update</button>
               <button v-if="userRole === 'admin'" @click="deleteImage(image.id)" class="button-f">Delete</button>
-              <button v-if="userRole === 'admin'" @click="moveImageLeft(index)" class="button-f2">←</button>
-              <button v-if="userRole === 'admin'" @click="moveImageRight(index)" class="button-f2">→</button>
+              <button v-if="userRole === 'admin'" @click="moveImageLeft(index)" class="button-f2">
+                  <span>&#8592;</span>
+              </button>
+              <button v-if="userRole === 'admin'" @click="moveImageRight(index)" class="button-f2">
+                  <span>&#8594;</span>
+              </button>
             </div>
             <img :src="image.imgNsfwUrl" alt="" @click="showFullImage(image)" class="img" />
             <p>{{ image.imgNsfwName }}</p>
