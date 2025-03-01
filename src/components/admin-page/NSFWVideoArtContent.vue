@@ -25,6 +25,12 @@
                         <div class="flex flex-column gap-10 items-end  ">
                             <button type="submit" class="button-f">{{ editMode ? 'Update' : 'Insert' }}</button>
                             <button type="button" class="button-f" @click="closePopup">Cancle</button>
+                            <button v-if="userRole === 'admin'" @click="moveImageLeft(index)" class="button-f2">
+                                <span>&#8592;</span>
+                            </button>
+                            <button v-if="userRole === 'admin'" @click="moveImageRight(index)" class="button-f2">
+                                    <span>&#8594;</span>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -254,3 +260,13 @@ import Loader from "../other-functions/Loader.vue";
         }
     }
 </script>
+
+<style scoped>
+    .button-f2{
+        cursor: pointer;
+        background-color: #272727;
+        color: #fff;
+        height: 30px;
+        border-radius: 3px;
+    }
+</style>

@@ -118,7 +118,6 @@
                     this.userRole = role;
                     return;
                 }
-
                 const token = localStorage.getItem('token');
                 if(!token){
                     this.userRole = 'guest'; // default role for unknow user
