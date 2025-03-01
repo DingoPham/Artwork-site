@@ -30,10 +30,10 @@
             <div class="flex gap-10 m-b">
               <button v-if="userRole === 'admin'" @click="updateVideo(index)" class="button-f">Update</button>
               <button v-if="userRole === 'admin'" @click="deleteVideo(video.id)" class="button-f">Delete</button>
-              <button v-if="userRole === 'admin'" @click="moveImageLeft(index)" class="button-f2">
+              <button v-if="userRole === 'admin'" @click="moveVideoLeft(index)" class="button-f2">
                   <span>&#8592;</span>
               </button>
-              <button v-if="userRole === 'admin'" @click="moveImageRight(index)" class="button-f2">
+              <button v-if="userRole === 'admin'" @click="moveVideoRight(index)" class="button-f2">
                   <span>&#8594;</span>
               </button>
             </div>
