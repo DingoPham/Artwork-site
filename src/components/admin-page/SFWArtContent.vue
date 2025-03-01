@@ -164,68 +164,63 @@
                 }
             },
 
-            saveImage(){
+            async saveImage() {
+                this.isLoading = true;
                 const imgData = {
                     imgUrl: this.imgUrl,
                     imgName: this.imgName,
                     describe: this.imgDescribe
                 };
-
-                console.log("Data test:", imgData);
-
-                const type = this.imgType; // selected type
-                const token = localStorage.getItem('token'); // get token from local storage
-
+                const type = this.imgType;
+                const token = localStorage.getItem('token');
                 const headers = {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}` // add token to header
+                    'Authorization': `Bearer ${token}`
                 };
-
-                if (this.editMode){
-                    fetch(`https://artwork-core-for-render-build.onrender.com/SFW/put/${this.images[this.editIndex].id}`,{
+                try {
+                    if (this.editMode) {
+                    const globalIndex = this.editIndex; // Sử dụng editIndex toàn cục
+                    const response = await fetch(`https://artwork-core-for-render-build.onrender.com/SFW/put/${this.images[globalIndex].id}`, {
                         method: 'PUT',
                         headers: headers,
-                        body: JSON.stringify({Type: type, Data: imgData})
-                    })
-                    .then(response => response.json())
-                    .then(() => {
-                        this.images[this.editIndex] = {imgData};
-                        this.closePopup();
-                    })
-                    .catch(error => {
-                        console.error('Error while updating image: ', error);
+                        body: JSON.stringify({ Type: type, Data: imgData })
                     });
-                }
-                else{
-                    fetch('https://artwork-core-for-render-build.onrender.com/SFW/post',{
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.message);
+                    }
+                    await response.json();
+                    // Cập nhật ảnh tại vị trí toàn cục
+                    this.images[globalIndex] = { ...this.images[globalIndex], ...imgData };
+                    this.closePopup();
+                    } else {
+                    const response = await fetch('https://artwork-core-for-render-build.onrender.com/SFW/post', {
                         method: 'POST',
                         headers: headers,
-                        body: JSON.stringify({Type: type, Data: imgData})
-                    })
-                    .then(response => {
-                        if(!response.ok){
-                            return response.json().then(err => {
-                                throw new Error(err.message);
-                            });
-                        }
-                        return response.json();
-                    })
-                    .then(newImage => {
-                        this.images.push({
-                            id: newImage.id,
-                            ...imgData
-                        });
-                        this.closePopup();
-                    })
-                    .catch(error =>{
-                        console.error('Error while inserting image: ', error)
+                        body: JSON.stringify({ Type: type, Data: imgData })
                     });
+                    if (!response.ok) {
+                        const err = await response.json();
+                        throw new Error(err.message);
+                    }
+                    const newImage = await response.json();
+                    this.images.push({
+                        id: newImage.id,
+                        ...imgData
+                    });
+                    this.closePopup();
+                    }
+                } catch (error) {
+                    console.error(`Error while ${this.editMode ? 'updating' : 'inserting'} image: `, error);
+                } finally {
+                    this.isLoading = false;
                 }
             },
             updateImage(index){
                 this.editMode = true;
                 this.showPopup = true;
-                this.editIndex = index;
+                const start = (this.curruntPage - 1) * this.itemsPerPage;
+                this.editIndex = start + index;
                 this.imgType = this.images[index].imgType || 'sfw_art'; //add type for pre-fill
                 this.imgUrl = this.images[index].imgUrl;
                 this.imgName = this.images[index].imgName;
