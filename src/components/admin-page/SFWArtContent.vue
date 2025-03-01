@@ -179,7 +179,7 @@
                 };
                 try {
                     if (this.editMode) {
-                    const globalIndex = this.editIndex; // Sử dụng editIndex toàn cục
+                    const globalIndex = this.editIndex;
                     const response = await fetch(`https://artwork-core-for-render-build.onrender.com/SFW/put/${this.images[globalIndex].id}`, {
                         method: 'PUT',
                         headers: headers,
@@ -204,10 +204,18 @@
                         throw new Error(err.message);
                     }
                     const newImage = await response.json();
-                    this.images.push({
+                    const newImageWithOrder = {
                         id: newImage.id,
-                        ...imgData
-                    });
+                        ...imgData,
+                        order: 0 // Gán order = 0 cho ảnh mới
+                    };
+                    this.images.unshift(newImageWithOrder); // Thêm vào đầu mảng
+                    // Cập nhật order cho các ảnh còn lại
+                    for (let i = 1; i < this.images.length; i++) {
+                        this.images[i].order = i;
+                    }
+                    await this.saveImageOrder(); // Lưu thứ tự mới về server
+                    this.curruntPage = 1;
                     this.closePopup();
                     }
                 } catch (error) {
@@ -229,7 +237,6 @@
             deleteImage(id){
                 const type = this.images.find(image => image.id === id).imgType || 'sfw_art';
                 const token = localStorage.getItem('token');
-
                 const headers = {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}` // add token to header
