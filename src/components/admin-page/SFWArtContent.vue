@@ -254,19 +254,23 @@
             },
             async moveImageLeft(index) {
                 if (this.userRole !== 'admin') return;
-                const globalIndex = (this.curruntPage - 1) * this.itemsPerPage + index;
-                if (globalIndex > 0) {
-                    [this.images[globalIndex], this.images[globalIndex - 1]] = 
-                    [this.images[globalIndex - 1], this.images[globalIndex]];
+                if (index > 0) {
+                    const start = (this.curruntPage - 1) * this.itemsPerPage;
+                    const globalIndex = start + index;
+                    const pageImages = this.paginatedImages.slice();
+                    [pageImages[index], pageImages[index - 1]] = [pageImages[index - 1], pageImages[index]];
+                    this.images.splice(start, this.itemsPerPage, ...pageImages);
                     await this.saveImageOrder();
                 }
             },
             async moveImageRight(index) {
                 if (this.userRole !== 'admin') return;
-                const globalIndex = (this.curruntPage - 1) * this.itemsPerPage + index;
-                if (globalIndex < this.images.length - 1) {
-                    [this.images[globalIndex], this.images[globalIndex + 1]] = 
-                    [this.images[globalIndex + 1], this.images[globalIndex]];
+                if (index < this.paginatedImages.length - 1) {
+                    const start = (this.curruntPage - 1) * this.itemsPerPage;
+                    const globalIndex = start + index;
+                    const pageImages = this.paginatedImages.slice();
+                    [pageImages[index], pageImages[index + 1]] = [pageImages[index + 1], pageImages[index]];
+                    this.images.splice(start, this.itemsPerPage, ...pageImages);
                     await this.saveImageOrder();
                 }
             },
@@ -303,6 +307,7 @@
         cursor: pointer;
         background-color: #272727;
         color: #fff;
-        height: 30px;   
+        height: 30px;
+        border-radius: 3px;
     }
 </style>
