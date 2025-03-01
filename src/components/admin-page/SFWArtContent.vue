@@ -246,6 +246,51 @@ import Loader from "../other-functions/Loader.vue";
                     console.error('Error while deleting image: ', error);
                 });
             },
+            moveImageLeft(index) {
+                if (this.userRole !== 'admin') return; // Chỉ admin được phép
+                const globalIndex = (this.curruntPage - 1) * this.itemsPerPage + index;
+                if (globalIndex > 0) { // Đảm bảo không vượt quá đầu mảng
+                    [this.images[globalIndex], this.images[globalIndex - 1]] = 
+                    [this.images[globalIndex - 1], this.images[globalIndex]];
+                }
+            },
+                // Thêm phương thức di chuyển ảnh sang phải
+                moveImageRight(index) {
+                if (this.userRole !== 'admin') return; // Chỉ admin được phép
+                const globalIndex = (this.curruntPage - 1) * this.itemsPerPage + index;
+                if (globalIndex < this.images.length - 1) { // Đảm bảo không vượt quá cuối mảng
+                    [this.images[globalIndex], this.images[globalIndex + 1]] = 
+                    [this.images[globalIndex + 1], this.images[globalIndex]];
+                }
+            },
+            async saveImageOrder() {
+                this.isLoading = true;
+                const token = localStorage.getItem('token');
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                };
+                try {
+                    const response = await fetch('https://artwork-core-for-render-build.onrender.com/SFW/order', {
+                    method: 'PUT',
+                    headers: headers,
+                    body: JSON.stringify({ images: this.images }) // Gửi toàn bộ mảng images
+                    });
+                    if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.message || 'Failed to save image order');
+                    }
+                } catch (error) {
+                    console.error('Error saving image order:', error);
+                }
+            },
         }
     }
 </script>
+
+<style scoped>
+.button-f {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+</style>
