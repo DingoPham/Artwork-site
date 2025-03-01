@@ -35,6 +35,12 @@
                 <div class="flex gap-10 m-b">
                     <button v-if="userRole === 'admin'" @click="updateImage(index)" class="button-f">Update</button>
                     <button v-if="userRole === 'admin'" @click="deleteImage(image.id)" class="button-f">Delete</button>
+                    <button v-if="userRole === 'admin'" @click="moveImageLeft(index)" class="button-f">
+                        <span>&#8592;</span>
+                    </button>
+                    <button v-if="userRole === 'admin'" @click="moveImageRight(index)" class="button-f">
+                        <span>&#8594;</span>
+                    </button>
                 </div>
                 <img :src="image.imgUrl" alt="" @click="showFullImage(image)" class="img" />
                 <p>{{ image.imgName }}</p>
@@ -287,10 +293,3 @@ import Loader from "../other-functions/Loader.vue";
         }
     }
 </script>
-
-<style scoped>
-.button-f {
-  padding: 5px 10px;
-  cursor: pointer;
-}
-</style>
