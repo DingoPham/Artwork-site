@@ -39,7 +39,7 @@
 /*------------------Mobile--------------------*/
 @media (max-width: 768px) {
     .fu-con {
-        top: 90%;
-        left: 80%;
+        bottom: 5vh;
+        right: 5vh;
     }
 }
