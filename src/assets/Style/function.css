@@ -18,8 +18,8 @@
     z-index: 1000;
 }
 .fu-con{
-    top: 90%;
-    left: 95%;
+    bottom: 5vh;
+    right: 5vh;
 }
 .fu-con-box{
     background-color: #80808062;
